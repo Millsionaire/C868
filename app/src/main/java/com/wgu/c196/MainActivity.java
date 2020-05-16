@@ -2,6 +2,7 @@ package com.wgu.c196;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,44 +25,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
-
-    @OnClick(R.id.fab)
-    public void fabClickHandler() {
-        Intent intent = new Intent(this, EditorActivity.class);
+    @OnClick(R.id.button)
+    void onClickTermsButton() {
+        Intent intent = new Intent(this, TermsActivity.class);
         startActivity(intent);
     }
 
-    private List<TermEntity> termsData = new ArrayList<>();
-    private TermsAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-        initRecyclerView();
-
-        termsData.addAll(SampleData.getTerms());
-        for (TermEntity term : termsData) {
-            Log.i("C196", term.toString());
-        }
-    }
-
-    private void initRecyclerView() {
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        mAdapter = new TermsAdapter(termsData, this);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

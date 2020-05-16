@@ -10,6 +10,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".TermsActivity"
+                android:label="@string/title_activity_terms"
+                android:theme="@style/AppTheme.NoActionBar">
+
+
+        </activity>
+        <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -22,11 +29,11 @@
         <activity
                 android:name=".EditorActivity"
                 android:label="@string/title_activity_editor"
-                android:parentActivityName=".MainActivity"
+                android:parentActivityName=".TermsActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.wgu.c196.MainActivity" />
+                    android:value="com.wgu.c196.TermsActivity" />
         </activity>
     </application>
 

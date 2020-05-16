@@ -100,4 +100,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="enter_term_name">Enter term name</string>
+    <string name="title_activity_terms">TermsActivity</string>
+    <string name="home">Home</string>
+    <string name="terms">Terms</string>
 </resources>

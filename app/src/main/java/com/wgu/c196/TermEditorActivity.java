@@ -17,12 +17,15 @@ import com.wgu.c196.database.TermEntity;
 import com.wgu.c196.viewmodel.TermEditorViewModel;
 import com.wgu.c196.viewmodel.TermsViewModel;
 
+import static com.wgu.c196.utilities.Constants.TERM_ID_KEY;
+
 public class TermEditorActivity extends AppCompatActivity {
 
     @BindView(R.id.term_text)
     TextView mTextView;
 
     private TermEditorViewModel termEditorViewModel;
+    private boolean mNewTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +50,15 @@ public class TermEditorActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            setTitle("New Term");
+            mNewTerm = true;
+        } else {
+            setTitle("Edit Term");
+            int termId = extras.getInt(TERM_ID_KEY);
+            termEditorViewModel.loadData(termId);
+        }
     }
 }

@@ -18,7 +18,7 @@ public interface TermDao {
     void deleteNote(TermEntity termEntity);
 
     @Query("SELECT * FROM terms WHERE id = :id")
-    TermEntity getNoteById(int id);
+    TermEntity getTermById(int id);
 
     @Query("SELECT * FROM terms ORDER BY startDate DESC")
     LiveData<List<TermEntity>> getAll();

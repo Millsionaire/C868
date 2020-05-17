@@ -51,7 +51,7 @@ public class DatabaseTest {
     public void compareStrings() {
         mDao.insertAll(SampleData.getTerms());
         TermEntity original = SampleData.getTerms().get(0);
-        TermEntity fromDb = mDao.getNoteById(1);
+        TermEntity fromDb = mDao.getTermById(1);
         assertEquals(original.getTitle(), fromDb.getTitle());
         assertEquals(1, fromDb.getId());
     }

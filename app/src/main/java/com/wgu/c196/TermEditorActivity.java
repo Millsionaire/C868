@@ -51,10 +51,10 @@ public class TermEditorActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
-            setTitle("New Term");
+            setTitle(getString(R.string.new_term));
             mNewTerm = true;
         } else {
-            setTitle("Edit Term");
+            setTitle(getString(R.string.edit_term));
             int termId = extras.getInt(TERM_ID_KEY);
             termEditorViewModel.loadData(termId);
         }

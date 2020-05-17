@@ -104,4 +104,6 @@
     <string name="home">Home</string>
     <string name="terms">Terms</string>
     <string name="delete_all_data">Delete all data</string>
+    <string name="new_term">New Term</string>
+    <string name="edit_term">Edit Term</string>
 </resources>

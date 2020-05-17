@@ -1,13 +1,14 @@
 package com.wgu.c196;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.BindView;
@@ -27,7 +28,7 @@ public class TermsActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void fabClickHandler() {
-        Intent intent = new Intent(this, EditorActivity.class);
+        Intent intent = new Intent(this, TermEditorActivity.class);
         startActivity(intent);
     }
 
@@ -43,26 +44,34 @@ public class TermsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-        initViewModel();
         initRecyclerView();
-
-        termsData.addAll(termsViewModel.mTerms);
-        for (TermEntity term : termsData) {
-            Log.i("C196", term.toString());
-        }
+        initViewModel();
     }
 
     private void initViewModel() {
+        final Observer<List<TermEntity>> termsObserver =
+                new Observer<List<TermEntity>>() {
+                    @Override
+                    public void onChanged(@Nullable List<TermEntity> termEntities) {
+                        termsData.clear();
+                        termsData.addAll(termEntities);
+
+                        if (mAdapter == null) {
+                            mAdapter = new TermsAdapter(termsData, TermsActivity.this);
+                            mRecyclerView.setAdapter(mAdapter);
+                        } else {
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                };
         termsViewModel = ViewModelProviders.of(this).get(TermsViewModel.class);
+        termsViewModel.mTerms.observe(this, termsObserver);
     }
 
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-
-        mAdapter = new TermsAdapter(termsData, this);
-        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -83,9 +92,16 @@ public class TermsActivity extends AppCompatActivity {
         if (id == R.id.action_add_sample_data) {
             addSampleData();
             return true;
+        } else if (id == R.id.action_delete_all) {
+            deleteAllNotes();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllNotes() {
+        termsViewModel.deleteAllNotes();
     }
 
     private void addSampleData() {

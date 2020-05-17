@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">C196</string>
-    <string name="action_add_sample_data">Add Sample Data</string>
+    <string name="action_add_sample_data">Add sample data</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -103,4 +103,5 @@
     <string name="title_activity_terms">TermsActivity</string>
     <string name="home">Home</string>
     <string name="terms">Terms</string>
+    <string name="delete_all_data">Delete all data</string>
 </resources>

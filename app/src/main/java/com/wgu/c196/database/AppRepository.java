@@ -1,5 +1,6 @@
 package com.wgu.c196.database;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import com.wgu.c196.utilities.SampleData;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.Executors;
 public class AppRepository {
     private static AppRepository ourInstance;
 
-    public List<TermEntity> mTerms;
+    public LiveData<List<TermEntity>> mTerms;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -22,8 +23,8 @@ public class AppRepository {
     }
 
     private AppRepository(Context context) {
-        mTerms = SampleData.getTerms();
         mDb = AppDatabase.getInstance(context);
+        mTerms = getAllTerms();
     }
 
     public void addSampleData() {
@@ -31,6 +32,19 @@ public class AppRepository {
             @Override
             public void run() {
                 mDb.termDao().insertAll(SampleData.getTerms());
+            }
+        });
+    }
+
+    private LiveData<List<TermEntity>> getAllTerms() {
+        return mDb.termDao().getAll();
+    }
+
+    public void deleteAllNotes() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.termDao().deleteAll();
             }
         });
     }

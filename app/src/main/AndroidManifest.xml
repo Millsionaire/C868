@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".EditorActivity"
+                android:name=".TermEditorActivity"
                 android:label="@string/title_activity_editor"
                 android:parentActivityName=".TermsActivity"
                 android:theme="@style/AppTheme.NoActionBar">

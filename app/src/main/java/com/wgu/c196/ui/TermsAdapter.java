@@ -1,6 +1,8 @@
 package com.wgu.c196.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.R;
+import com.wgu.c196.TermEditorActivity;
 import com.wgu.c196.database.TermEntity;
 
 import java.util.List;
+
+import static com.wgu.c196.utilities.Constants.TERM_ID_KEY;
 
 public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.ViewHolder> {
 
@@ -36,6 +41,15 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final TermEntity term = mTerms.get(position);
         holder.mTextView.setText(term.getTitle());
+
+        holder.mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, TermEditorActivity.class);
+                intent.putExtra(TERM_ID_KEY, term.getId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -46,6 +60,8 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.term_text)
         TextView mTextView;
+        @BindView(R.id.fab)
+        FloatingActionButton mFab;
 
         public ViewHolder(View itemView) {
             super(itemView);

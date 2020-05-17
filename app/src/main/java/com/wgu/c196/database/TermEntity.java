@@ -1,8 +1,15 @@
-package com.wgu.c196.model;
+package com.wgu.c196.database;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
+@Entity(tableName = "terms")
 public class TermEntity {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String title;
@@ -18,6 +25,7 @@ public class TermEntity {
      * @param startDate Date
      * @param endDate Date
      */
+    @Ignore
     public TermEntity(String title, Date startDate, Date endDate) {
         this.title = title;
         this.startDate = startDate;
@@ -28,6 +36,7 @@ public class TermEntity {
      * Constructor for when you want to create a new term and then assign values
      * separately
      */
+    @Ignore
     public TermEntity() { }
 
     /**

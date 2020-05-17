@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.R;
-import com.wgu.c196.model.TermEntity;
+import com.wgu.c196.database.TermEntity;
 
 import java.util.List;
 

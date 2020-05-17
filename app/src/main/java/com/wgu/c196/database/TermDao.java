@@ -9,7 +9,7 @@ import java.util.List;
 public interface TermDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNote(TermEntity termEntity);
+    void insertTerm(TermEntity termEntity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<TermEntity> terms);

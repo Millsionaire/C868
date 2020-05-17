@@ -4,9 +4,11 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import com.wgu.c196.database.AppRepository;
 import com.wgu.c196.database.TermEntity;
 
+import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -29,5 +31,20 @@ public class TermEditorViewModel extends AndroidViewModel {
                 mLiveTerm.postValue(term);
             }
         });
+    }
+
+    public void saveTerm(String newTerm) {
+        TermEntity term = mLiveTerm.getValue();
+
+        if (term == null) {
+            if (TextUtils.isEmpty(newTerm.trim())) {
+                return;
+            }
+            term = new TermEntity(term.getTitle(), new Date(), new Date());
+        } else {
+            term.setTitle(newTerm);
+        }
+
+        mRepository.insertTerm(term);
     }
 }

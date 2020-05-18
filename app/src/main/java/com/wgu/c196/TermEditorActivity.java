@@ -14,8 +14,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.database.TermEntity;
+import com.wgu.c196.utilities.Constants;
 import com.wgu.c196.viewmodel.TermEditorViewModel;
 
+import static com.wgu.c196.utilities.Constants.EDITING_KEY;
 import static com.wgu.c196.utilities.Constants.TERM_ID_KEY;
 
 public class TermEditorActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class TermEditorActivity extends AppCompatActivity {
     TextView mTextView;
 
     private TermEditorViewModel termEditorViewModel;
-    private boolean mNewTerm;
+    private boolean mNewTerm, mEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,10 @@ public class TermEditorActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
+
+        if (savedInstanceState != null) {
+            mEditing = savedInstanceState.getBoolean(EDITING_KEY);
+        }
         initViewModel();
     }
 
@@ -45,7 +51,7 @@ public class TermEditorActivity extends AppCompatActivity {
         termEditorViewModel.mLiveTerm.observe(this, new Observer<TermEntity>() {
             @Override
             public void onChanged(@Nullable TermEntity termEntity) {
-                if (termEntity != null) {
+                if (termEntity != null && !mEditing) {
                     mTextView.setText(termEntity.getTitle());
                 }
             }
@@ -91,5 +97,11 @@ public class TermEditorActivity extends AppCompatActivity {
     private void saveAndReturn() {
         termEditorViewModel.saveTerm(mTextView.getText().toString());
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(EDITING_KEY, true);
+        super.onSaveInstanceState(outState);
     }
 }

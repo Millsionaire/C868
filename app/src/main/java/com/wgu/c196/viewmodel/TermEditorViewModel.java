@@ -47,4 +47,8 @@ public class TermEditorViewModel extends AndroidViewModel {
 
         mRepository.insertTerm(term);
     }
+
+    public void deteteTerm() {
+        mRepository.deleteTerm(mLiveTerm.getValue());
+    }
 }

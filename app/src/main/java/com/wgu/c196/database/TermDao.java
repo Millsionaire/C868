@@ -15,7 +15,7 @@ public interface TermDao {
     void insertAll(List<TermEntity> terms);
 
     @Delete
-    void deleteNote(TermEntity termEntity);
+    void deleteTerm(TermEntity termEntity);
 
     @Query("SELECT * FROM terms WHERE id = :id")
     TermEntity getTermById(int id);

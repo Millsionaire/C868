@@ -40,7 +40,7 @@ public class AppRepository {
         return mDb.termDao().getAll();
     }
 
-    public void deleteAllNotes() {
+    public void deleteAllTerms() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -58,6 +58,15 @@ public class AppRepository {
             @Override
             public void run() {
                 mDb.termDao().insertTerm(term);
+            }
+        });
+    }
+
+    public void deleteTerm(final TermEntity term) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.termDao().deleteTerm(term);
             }
         });
     }

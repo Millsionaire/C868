@@ -32,8 +32,23 @@ public class AppRepository {
             @Override
             public void run() {
                 mDb.termDao().insertAll(SampleData.getTerms());
+
+                for(TermEntity term : SampleData.getTerms()) {
+                    insertCoursesForTerm(term);
+                };
             }
         });
+    }
+
+    private void insertCoursesForTerm(TermEntity term) {
+        List<CourseEntity> courses = term.getCourses();
+        if (courses != null) {
+            for (CourseEntity course : courses) {
+                TermEntity selectedTerm = mDb.termDao().getIdByTitle(term.getTitle());
+                course.setTermId(selectedTerm.getId());
+            }
+            mDb.courseDao().insertAll(courses);
+        }
     }
 
     private LiveData<List<TermEntity>> getAllTerms() {
@@ -41,6 +56,12 @@ public class AppRepository {
     }
 
     public void deleteAllTerms() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.courseDao().deleteAll();
+            }
+        });
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -54,6 +75,11 @@ public class AppRepository {
     }
 
     public void insertTerm(final TermEntity term) {
+//        List<CourseEntity> courses = term.getCourses();
+//        if (!courses.isEmpty()) {
+//            mDb.courseDao().insertAll(courses);
+//        }
+        insertCoursesForTerm(term);
         executor.execute(new Runnable() {
             @Override
             public void run() {

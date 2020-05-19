@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity(tableName = "terms")
 public class TermEntity {
@@ -18,8 +19,27 @@ public class TermEntity {
 
     private Date endDate;
 
+    @Ignore
+    private List<CourseEntity> courses;
+
     /**
-     * Constructor for creating a new note with an auto-generated id
+     * Constructor for creating a new term with an auto-generated id and courses
+     *
+     * @param title String
+     * @param startDate Date
+     * @param endDate Date
+     * @param courses List<CourseEntity>
+     */
+    @Ignore
+    public TermEntity(String title, Date startDate, Date endDate, List<CourseEntity> courses) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.courses = courses;
+    }
+
+    /**
+     * Constructor for creating a new term with an auto-generated id and no courses
      *
      * @param title String
      * @param startDate Date
@@ -46,6 +66,7 @@ public class TermEntity {
      * @param title String
      * @param startDate Date
      * @param endDate Date
+     * @param courses List<CourseEntity>
      */
     public TermEntity(int id, String title, Date startDate, Date endDate) {
         this.id = id;
@@ -84,6 +105,14 @@ public class TermEntity {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<CourseEntity> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseEntity> courses) {
+        this.courses = courses;
     }
 
     @Override

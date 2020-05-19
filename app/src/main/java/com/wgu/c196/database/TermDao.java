@@ -20,6 +20,9 @@ public interface TermDao {
     @Query("SELECT * FROM terms WHERE id = :id")
     TermEntity getTermById(int id);
 
+    @Query("SELECT id FROM terms WHERE title = :title")
+    TermEntity getIdByTitle(String title);
+
     @Query("SELECT * FROM terms ORDER BY startDate DESC")
     LiveData<List<TermEntity>> getAll();
 

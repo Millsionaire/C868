@@ -9,7 +9,7 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-@Database(entities = {TermEntity.class, CourseEntity.class}, version = 2)
+@Database(entities = {TermEntity.class, CourseEntity.class}, version = 2, exportSchema = false)
 @TypeConverters({DateConverter.class, StatusConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "AppDatabase.db";

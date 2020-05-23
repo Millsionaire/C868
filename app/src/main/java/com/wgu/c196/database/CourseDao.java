@@ -19,6 +19,9 @@ interface CourseDao {
     @Query("SELECT * FROM courses WHERE id = :id")
     CourseEntity getCourseById(int id);
 
+//    @Query("SELECT * FROM courses WHERE id = :id")
+//    CourseEntity getCourseById(int id);
+
     @Query("SELECT * FROM courses ORDER BY startDate DESC")
     LiveData<List<CourseEntity>> getAll();
 
@@ -27,4 +30,7 @@ interface CourseDao {
 
     @Query("SELECT COUNT(*) FROM courses")
     int getCount();
+
+    @Query("SELECT * FROM courses WHERE term_id = :termId")
+    LiveData<List<CourseEntity>> getCoursesByTermId(int termId);
 }

@@ -20,7 +20,7 @@ public interface TermDao {
     @Query("SELECT * FROM terms WHERE id = :id")
     TermEntity getTermById(int id);
 
-    @Query("SELECT id FROM terms WHERE title = :title")
+    @Query("SELECT * FROM terms WHERE title = :title")
     TermEntity getIdByTitle(String title);
 
     @Query("SELECT * FROM terms ORDER BY startDate DESC")
@@ -31,4 +31,8 @@ public interface TermDao {
 
     @Query("SELECT COUNT(*) FROM terms")
     int getCount();
+
+    @Transaction
+    @Query("SELECT * FROM terms WHERE id = :id")
+    TermWithCourses getTermWithCourses(int id);
 }

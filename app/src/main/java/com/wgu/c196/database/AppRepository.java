@@ -2,8 +2,11 @@ package com.wgu.c196.database;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
+import com.wgu.c196.utilities.Constants;
 import com.wgu.c196.utilities.SampleData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -12,6 +15,7 @@ public class AppRepository {
     private static AppRepository ourInstance;
 
     public LiveData<List<TermEntity>> mTerms;
+    public LiveData<List<CourseEntity>> mCourses;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -33,9 +37,10 @@ public class AppRepository {
             public void run() {
                 mDb.termDao().insertAll(SampleData.getTerms());
 
-                for(TermEntity term : SampleData.getTerms()) {
+                for (TermEntity term : SampleData.getTerms()) {
                     insertCoursesForTerm(term);
-                };
+                }
+                ;
             }
         });
     }
@@ -74,11 +79,11 @@ public class AppRepository {
         return mDb.termDao().getTermById(termId);
     }
 
+    public TermWithCourses getTermWithCoursesById(int termId) {
+        return mDb.termDao().getTermWithCourses(termId);
+    }
+
     public void insertTerm(final TermEntity term) {
-//        List<CourseEntity> courses = term.getCourses();
-//        if (!courses.isEmpty()) {
-//            mDb.courseDao().insertAll(courses);
-//        }
         insertCoursesForTerm(term);
         executor.execute(new Runnable() {
             @Override
@@ -88,12 +93,30 @@ public class AppRepository {
         });
     }
 
-    public void deleteTerm(final TermEntity term) {
+    public void deleteTerm(final TermWithCourses term) {
+        final Boolean[] foreignKeyConstraint = {false};
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.termDao().deleteTerm(term);
+                try {
+                    mDb.termDao().deleteTerm(term.term);
+                } catch (Exception e) {
+                    String msg = e.getMessage();
+                    assert msg != null;
+                    if (msg.equals("foreign key constraint failed (code 19)")) {
+                        foreignKeyConstraint[0] = true;
+                    } else {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
+        if (foreignKeyConstraint[0]) {
+            throw new SQLiteConstraintException();
+        }
+    }
+
+    public LiveData<List<CourseEntity>> getCoursedByTermId(final int termId) {
+        return mDb.courseDao().getCoursesByTermId(termId);
     }
 }

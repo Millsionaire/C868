@@ -66,7 +66,6 @@ public class TermEntity {
      * @param title String
      * @param startDate Date
      * @param endDate Date
-     * @param courses List<CourseEntity>
      */
     public TermEntity(int id, String title, Date startDate, Date endDate) {
         this.id = id;

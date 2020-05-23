@@ -107,4 +107,9 @@
     <string name="new_term">New Term</string>
     <string name="edit_term">Edit Term</string>
     <string name="delete">Delete</string>
+    <string name="courses">Courses</string>
+    <string name="title_activity_course_editor">CourseEditorActivity</string>
+    <string name="enter_course_name">Enter course name</string>
+    <string name="term_delete_alert_message">Terms cannot be deleted if they contain courses. Please remove all courses before deleting.</string>
+    <string name="alert_ok_text">Got it</string>
 </resources>

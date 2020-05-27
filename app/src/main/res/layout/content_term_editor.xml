@@ -10,76 +10,107 @@
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="729dp"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteY="1dp">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_margin"
+            android:orientation="vertical">
 
-        <android.support.constraint.ConstraintLayout
+        <TextView
+                android:id="@+id/term_text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/term_name"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/text_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+                android:id="@+id/term_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:hint="@string/enter_term_name"
+                android:inputType="textMultiLine|textCapSentences"
+                app:layout_constraintTop_toBottomOf="@+id/term_text_label"
+                tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+                android:id="@+id/start_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/start_date"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/term_text"
+                tools:layout_editor_absoluteX="0dp" />
+
+        <EditText
+                android:id="@+id/start_date_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_start_date"
+                android:inputType="textMultiLine|textCapSentences"
+                app:layout_constraintTop_toBottomOf="@+id/start_date_label"
+                tools:ignore="TextFields"
+                tools:layout_editor_absoluteX="29dp" />
+
+        <TextView
+                android:id="@+id/end_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/end_date"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/start_date_text"
+                tools:layout_editor_absoluteX="31dp" />
+
+        <EditText
+                android:id="@+id/end_date_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_end_date"
+                android:inputType="textMultiLine|textCapSentences"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_label"
+                tools:ignore="TextFields"
+                tools:layout_editor_absoluteX="31dp" />
+
+        <TextView
+                android:id="@+id/courses_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/courses"
+                android:textAllCaps="false"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_text"
+                tools:layout_editor_absoluteX="29dp" />
+
+        <android.support.v7.widget.RecyclerView
+                android:id='@+id/recycler_view'
+                android:layout_width="match_parent"
+                android:layout_height="204dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/courses_label"
+                tools:layout_editor_absoluteX="29dp" />
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_gravity="bottom|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+                app:srcCompat="@drawable/ic_add" />
 
-            <EditText
-                    android:id="@+id/term_text"
-                    android:layout_width="403dp"
-                    android:layout_height="74dp"
-                    android:layout_margin="@dimen/text_margin"
-                    android:layout_marginTop="16dp"
-                    android:autofillHints=""
-                    android:hint="@string/enter_term_name"
-                    android:inputType="textMultiLine|textCapSentences"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-
-
-        <android.support.constraint.ConstraintLayout
-                android:layout_width="383dp"
-                android:layout_height="609dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="415dp"
-                    android:layout_height="108dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="108dp"
-                    android:text="@string/courses"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.v7.widget.RecyclerView
-                    android:id='@+id/recycler_view'
-                    android:layout_width="377dp"
-                    android:layout_height="268dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="217dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:scrollbars="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginTop="485dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_add" />
-        </android.support.constraint.ConstraintLayout>
+        <!--        </android.support.constraint.ConstraintLayout>-->
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

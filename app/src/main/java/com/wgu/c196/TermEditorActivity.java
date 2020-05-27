@@ -14,7 +14,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +24,6 @@ import butterknife.OnClick;
 import com.wgu.c196.database.CourseEntity;
 import com.wgu.c196.database.TermWithCourses;
 import com.wgu.c196.ui.CoursesAdapter;
-import com.wgu.c196.utilities.Constants;
 import com.wgu.c196.viewmodel.TermEditorViewModel;
 
 import java.util.ArrayList;
@@ -36,10 +34,16 @@ import static com.wgu.c196.utilities.Constants.*;
 public class TermEditorActivity extends AppCompatActivity {
 
     @BindView(R.id.term_text)
-    TextView mTextView;
+    TextView mTermText;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
+
+    @BindView((R.id.start_date_text))
+    TextView mStartDateText;
+
+    @BindView((R.id.end_date_text))
+    TextView mEndDateText;
 
     @OnClick(R.id.fab)
     public void fabClickHandler() {
@@ -77,6 +81,7 @@ public class TermEditorActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<CourseEntity> courseEntities) {
                 courseData.clear();
+                assert courseEntities != null;
                 courseData.addAll(courseEntities);
 
                 if (mAdapter == null) {
@@ -92,7 +97,9 @@ public class TermEditorActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable TermWithCourses termEntity) {
                 if (termEntity != null && !mEditing) {
-                    mTextView.setText(termEntity.term.getTitle());
+                    mTermText.setText(termEntity.term.getTitle());
+                    mStartDateText.setText(termEntity.term.getStartDate().toString());
+                    mEndDateText.setText(termEntity.term.getEndDate().toString());
                     if (termEntity.courses != null) {
                         termEditorViewModel.mCourses.observe(TermEditorActivity.this, coursesObserver);
                     }
@@ -151,7 +158,7 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
     public void showDeleteTermWithCoursesErrorAlert() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(mTextView.getContext());
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(mTermText.getContext());
         builder1.setMessage(R.string.term_delete_alert_message);
         builder1.setCancelable(true);
 
@@ -173,7 +180,7 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
     private void saveAndReturn() {
-        termEditorViewModel.saveTerm(mTextView.getText().toString());
+        termEditorViewModel.saveTerm(mTermText.getText().toString());
         finish();
     }
 

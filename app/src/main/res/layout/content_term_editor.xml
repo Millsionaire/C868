@@ -109,8 +109,5 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_view"
                 app:srcCompat="@drawable/ic_add" />
-
-        <!--        </android.support.constraint.ConstraintLayout>-->
-
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

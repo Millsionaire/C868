@@ -35,7 +35,7 @@ public class AppRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.mentorDao().insertMentor(new MentorEntity("Becky Stovall", "555-222-4444", "bstovall@wgu.edu"));
+                mDb.mentorDao().insertMentor(new MentorEntity(1, "Becky Stovall", "555-222-4444", "bstovall@wgu.edu"));
                 mDb.termDao().insertAll(SampleData.getTerms());
 
                 for (TermEntity term : SampleData.getTerms()) {
@@ -51,8 +51,21 @@ public class AppRepository {
             for (CourseEntity course : courses) {
                 TermEntity selectedTerm = mDb.termDao().getIdByTitle(term.getTitle());
                 course.setTermId(selectedTerm.getId());
+                mDb.courseDao().insertCourse(course);
+                insertAssessmentsForCourse(course);
             }
-            mDb.courseDao().insertAll(courses);
+
+        }
+    }
+
+    private void insertAssessmentsForCourse(CourseEntity course) {
+        List<AssessmentEntity> assessments = course.getAssessments();
+        if (assessments != null) {
+            for (AssessmentEntity assessment : assessments) {
+                CourseEntity selectedCourse = mDb.courseDao().getIdByTitle(course.getTitle());
+                assessment.setCourseId(selectedCourse.getId());
+            }
+            mDb.assessmentDao().insertAll(assessments);
         }
     }
 
@@ -61,6 +74,18 @@ public class AppRepository {
     }
 
     public void deleteAllTerms() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.assessmentDao().deleteAll();
+            }
+        });
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.mentorDao().deleteAll();
+            }
+        });
         executor.execute(new Runnable() {
             @Override
             public void run() {

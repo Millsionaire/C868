@@ -1,6 +1,7 @@
 package com.wgu.c196.utilities;
 
 import com.wgu.c196.database.AssessmentEntity;
+import com.wgu.c196.database.MentorEntity;
 import com.wgu.c196.database.TermEntity;
 import com.wgu.c196.database.CourseEntity;
 
@@ -29,7 +30,7 @@ public class SampleData {
         List<AssessmentEntity> assessments1 = new ArrayList<>();
         assessments1.add(new AssessmentEntity(ASSESSMENT_1, getDate(1), AssessmentEntity.Type.OBJECTIVE));
         assessments1.add(new AssessmentEntity(ASSESSMENT_2, getDate(1), AssessmentEntity.Type.PERFORMANCE));
-
+        
         List<CourseEntity> courses1 = new ArrayList<>();
         courses1.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS, 1, "Some Notes", assessments1));
         courses1.add(new CourseEntity(COURSE_2, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE, 1));

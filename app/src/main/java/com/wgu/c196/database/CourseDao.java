@@ -33,4 +33,7 @@ interface CourseDao {
 
     @Query("SELECT * FROM courses WHERE term_id = :termId")
     LiveData<List<CourseEntity>> getCoursesByTermId(int termId);
+
+    @Query("SELECT * FROM courses WHERE title = :title")
+    CourseEntity getIdByTitle(String title);
 }

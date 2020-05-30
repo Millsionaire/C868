@@ -7,10 +7,10 @@ import java.util.List;
 
 @Dao
 interface MentorDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMentor(MentorEntity mentorEntity);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<MentorEntity> mentors);
 
     @Delete

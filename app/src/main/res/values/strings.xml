@@ -111,6 +111,7 @@
     <string name="title_activity_course_editor">Edit Course</string>
     <string name="enter_course_name">Enter course name</string>
     <string name="term_delete_alert_message">Terms cannot be deleted if they contain courses. Please remove all courses before deleting.</string>
+    <string name="course_delete_alert_message">Courses cannot be deleted if they contain assessments. Please remove all assessments before deleting.</string>
     <string name="alert_ok_text">Got it</string>
     <string name="enter_start_date">Enter Start Date MM/DD/YYYY</string>
     <string name="enter_end_date">Enter End Date MM/DD/YYYY</string>
@@ -120,5 +121,9 @@
     <string name="course_name">Course Name</string>
     <string name="edit_course">Edit Course</string>
     <string name="new_course">New Course</string>
-    <string name="title_activity_assessment_editor">AssessmentEditorActivity</string>
+    <string name="title_activity_assessment_editor">Edit Assessment</string>
+    <string name="assessment_name">Assessment Name</string>
+    <string name="enter_assessment_name">Enter Assessment Name</string>
+    <string name="due_date">Due Date</string>
+    <string name="enter_due_date">Enter Due Date</string>
 </resources>

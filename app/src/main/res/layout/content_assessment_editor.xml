@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".TermEditorActivity"
+        tools:showIn="@layout/activity_term_editor">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_margin"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/assessment_text_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/assessment_name"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/text_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+                android:id="@+id/assessment_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:hint="@string/enter_assessment_name"
+                android:inputType="textMultiLine|textCapSentences"
+                app:layout_constraintTop_toBottomOf="@+id/assessment_text_label"
+                tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+                android:id="@+id/due_date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/due_date"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/assessment_text"
+                tools:layout_editor_absoluteX="0dp" />
+
+        <EditText
+                android:id="@+id/start_date_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_due_date"
+                android:inputType="textMultiLine|textCapSentences"
+                app:layout_constraintTop_toBottomOf="@+id/due_date_label"
+                tools:ignore="TextFields"
+                tools:layout_editor_absoluteX="29dp" />
+
+<!--        <TextView-->
+<!--                android:id="@+id/end_date_label"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/text_margin"-->
+<!--                android:text="@string/end_date"-->
+<!--                android:textSize="18sp"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/start_date_text"-->
+<!--                tools:layout_editor_absoluteX="31dp" />-->
+
+<!--        <EditText-->
+<!--                android:id="@+id/end_date_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:autofillHints=""-->
+<!--                android:hint="@string/enter_end_date"-->
+<!--                android:inputType="textMultiLine|textCapSentences"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/end_date_label"-->
+<!--                tools:ignore="TextFields"-->
+<!--                tools:layout_editor_absoluteX="31dp" />-->
+
+<!--        <TextView-->
+<!--                android:id="@+id/assessments_label"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/text_margin"-->
+<!--                android:text="@string/assessments"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textSize="30sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/end_date_text"-->
+<!--                tools:layout_editor_absoluteX="29dp" />-->
+
+<!--        <android.support.v7.widget.RecyclerView-->
+<!--                android:id='@+id/recycler_view'-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="204dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:focusableInTouchMode="true"-->
+<!--                android:scrollbars="vertical"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/assessments_label"-->
+<!--                tools:layout_editor_absoluteX="29dp" />-->
+
+<!--        <android.support.design.widget.FloatingActionButton-->
+<!--                android:id="@+id/fab"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="bottom|end"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/recycler_view"-->
+<!--                app:srcCompat="@drawable/ic_add" />-->
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

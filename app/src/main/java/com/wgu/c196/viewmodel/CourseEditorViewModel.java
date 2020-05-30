@@ -56,7 +56,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
         mRepository.insertCourse(course);
     }
 
-    public void deleteTerm() {
+    public void deleteCourse() {
         try {
             mRepository.deleteCourse(mLiveCourse.getValue());
         } catch (SQLiteConstraintException e) {

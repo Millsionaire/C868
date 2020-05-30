@@ -24,12 +24,12 @@ public class SampleData {
         List<TermEntity> terms = new ArrayList<>();
 
         List<CourseEntity> courses1 = new ArrayList<>();
-        courses1.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS));
-        courses1.add(new CourseEntity(COURSE_1, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE));
+        courses1.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS, 1));
+        courses1.add(new CourseEntity(COURSE_1, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE, 1));
 
         List<CourseEntity> courses2 = new ArrayList<>();
-        courses2.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS));
-        courses2.add(new CourseEntity(COURSE_1, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE));
+        courses2.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS, 1));
+        courses2.add(new CourseEntity(COURSE_1, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE, 1));
 
         terms.add(new TermEntity(TITLE_1, getDate(0), getDate(1), courses1));
         terms.add(new TermEntity(TITLE_2, getDate(2), getDate(3), courses2));

@@ -6,12 +6,22 @@ import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "courses",
-        indices = {@Index("term_id")},
-        foreignKeys = @ForeignKey(
-                entity = TermEntity.class,
-                parentColumns = "id",
-                childColumns = "term_id"
-        )
+        indices = {
+                @Index("term_id"),
+                @Index("mentor_id")
+        },
+        foreignKeys = {
+                @ForeignKey(
+                        entity = TermEntity.class,
+                        parentColumns = "id",
+                        childColumns = "term_id"
+                ),
+                @ForeignKey(
+                        entity = MentorEntity.class,
+                        parentColumns = "id",
+                        childColumns = "mentor_id"
+                )
+        }
 )
 public class CourseEntity {
 
@@ -27,6 +37,9 @@ public class CourseEntity {
 
     private Date endDate;
 
+    @ColumnInfo(name = "mentor_id")
+    private int mentorId;
+
     /**
      * Status of the given task.
      * Enumerated Values: 0 (Active), 1 (Inactive), 2 (Completed)
@@ -37,16 +50,17 @@ public class CourseEntity {
     /**
      * Constructor for creating a new course with an auto-generated id
      *
-     * @param title String
+     * @param title     String
      * @param startDate Date
-     * @param endDate Date
+     * @param endDate   Date
      */
     @Ignore
-    public CourseEntity(String title, Date startDate, Date endDate, Status status) {
+    public CourseEntity(String title, Date startDate, Date endDate, Status status, int mentorId) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.mentorId = mentorId;
     }
 
     /**
@@ -54,22 +68,24 @@ public class CourseEntity {
      * separately
      */
     @Ignore
-    public CourseEntity() { }
+    public CourseEntity() {
+    }
 
     /**
      * Constructor for editing an existing course
      *
-     * @param id int
-     * @param title String
+     * @param id        int
+     * @param title     String
      * @param startDate Date
-     * @param endDate Date
+     * @param endDate   Date
      */
-    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status) {
+    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status, int mentorId) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.mentorId = mentorId;
     }
 
     //in progress, completed, dropped, plan to take
@@ -138,5 +154,13 @@ public class CourseEntity {
 
     public void setTermId(int termId) {
         this.termId = termId;
+    }
+
+    public int getMentorId() {
+        return mentorId;
+    }
+
+    public void setMentorId(int mentorId) {
+        this.mentorId = mentorId;
     }
 }

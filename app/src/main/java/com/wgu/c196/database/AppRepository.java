@@ -35,12 +35,12 @@ public class AppRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
+                mDb.mentorDao().insertMentor(new MentorEntity("Becky Stovall", "555-222-4444", "bstovall@wgu.edu"));
                 mDb.termDao().insertAll(SampleData.getTerms());
 
                 for (TermEntity term : SampleData.getTerms()) {
                     insertCoursesForTerm(term);
                 }
-                ;
             }
         });
     }

@@ -9,7 +9,7 @@ import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-@Database(entities = {TermEntity.class, CourseEntity.class, MentorEntity.class}, version = 3, exportSchema = false)
+@Database(entities = {TermEntity.class, CourseEntity.class, MentorEntity.class, AssessmentEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class, StatusConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "AppDatabase.db";
@@ -19,6 +19,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TermDao termDao();
     public abstract CourseDao courseDao();
     public abstract MentorDao mentorDao();
+    public abstract AssessmentDao assessmentDao();
 
 //    private static final Migration MIGRATION_1_2 = new Migration(1, 2) {
 //        @Override

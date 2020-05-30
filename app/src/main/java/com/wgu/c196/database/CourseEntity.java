@@ -37,9 +37,6 @@ public class CourseEntity {
 
     private Date endDate;
 
-    @ColumnInfo(name = "mentor_id")
-    private int mentorId;
-
     /**
      * Status of the given task.
      * Enumerated Values: 0 (Active), 1 (Inactive), 2 (Completed)
@@ -47,12 +44,44 @@ public class CourseEntity {
     @TypeConverters(StatusConverter.class)
     private Status status;
 
+    @ColumnInfo(name = "mentor_id")
+    private int mentorId;
+
+    private String notes;
+
+    @Ignore
+    private List<AssessmentEntity> assessments;
+
     /**
      * Constructor for creating a new course with an auto-generated id
      *
-     * @param title     String
-     * @param startDate Date
-     * @param endDate   Date
+     * @param title
+     * @param startDate
+     * @param endDate
+     * @param status
+     * @param mentorId
+     * @param notes
+     * @param assessments
+     */
+    @Ignore
+    public CourseEntity(String title, Date startDate, Date endDate, Status status, int mentorId, String notes, List<AssessmentEntity> assessments) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.mentorId = mentorId;
+        this.notes = notes;
+        this.assessments = assessments;
+    }
+
+    /**
+     * Constructor for creating a new course with an auto-generated id and no notes or assessments
+     *
+     * @param title
+     * @param startDate
+     * @param endDate
+     * @param status
+     * @param mentorId
      */
     @Ignore
     public CourseEntity(String title, Date startDate, Date endDate, Status status, int mentorId) {
@@ -72,6 +101,24 @@ public class CourseEntity {
     }
 
     /**
+     * Constructor for editing an existing course with no assessments
+     *
+     * @param id        int
+     * @param title     String
+     * @param startDate Date
+     * @param endDate   Date
+     */
+    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status, int mentorId, String notes) {
+        this.id = id;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.mentorId = mentorId;
+        this.notes = notes;
+    }
+
+    /**
      * Constructor for editing an existing course
      *
      * @param id        int
@@ -79,13 +126,15 @@ public class CourseEntity {
      * @param startDate Date
      * @param endDate   Date
      */
-    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status, int mentorId) {
+    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status, int mentorId, String notes, List<AssessmentEntity> assessments) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.mentorId = mentorId;
+        this.notes = notes;
+        this.assessments = assessments;
     }
 
     //in progress, completed, dropped, plan to take
@@ -95,7 +144,6 @@ public class CourseEntity {
         DROPPED(1),
         COMPLETED(2),
         PLAN_TO_TAKE(3);
-
 
         private int code;
 
@@ -162,5 +210,21 @@ public class CourseEntity {
 
     public void setMentorId(int mentorId) {
         this.mentorId = mentorId;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public List<AssessmentEntity> getAssessments() {
+        return assessments;
+    }
+
+    public void setAssessments(List<AssessmentEntity> assessments) {
+        this.assessments = assessments;
     }
 }

@@ -126,4 +126,5 @@
     <string name="enter_assessment_name">Enter Assessment Name</string>
     <string name="due_date">Due Date</string>
     <string name="enter_due_date">Enter Due Date</string>
+    <string name="assessments">Assessments</string>
 </resources>

@@ -158,7 +158,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     public void showDeleteCourseWithAssessmentssErrorAlert() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(mCourseText.getContext());
-        builder1.setMessage(R.string.term_delete_alert_message);
+        builder1.setMessage(R.string.course_delete_alert_message);
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(

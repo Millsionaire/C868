@@ -79,11 +79,11 @@
                 tools:layout_editor_absoluteX="31dp" />
 
         <TextView
-                android:id="@+id/courses_label"
+                android:id="@+id/assessments_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_margin"
-                android:text="@string/courses"
+                android:text="@string/assessments"
                 android:textAllCaps="false"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -98,7 +98,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:scrollbars="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/courses_label"
+                app:layout_constraintTop_toBottomOf="@+id/assessments_label"
                 tools:layout_editor_absoluteX="29dp" />
 
         <android.support.design.widget.FloatingActionButton

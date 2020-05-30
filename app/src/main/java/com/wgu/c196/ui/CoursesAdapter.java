@@ -13,14 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.CourseEditorActivity;
 import com.wgu.c196.R;
-import com.wgu.c196.TermEditorActivity;
 import com.wgu.c196.database.CourseEntity;
-import com.wgu.c196.database.TermEntity;
 
 import java.util.List;
 
 import static com.wgu.c196.utilities.Constants.COURSE_ID_KEY;
-import static com.wgu.c196.utilities.Constants.TERM_ID_KEY;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder> {
 

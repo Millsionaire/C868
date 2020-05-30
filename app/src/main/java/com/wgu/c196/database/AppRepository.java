@@ -16,6 +16,7 @@ public class AppRepository {
 
     public LiveData<List<TermEntity>> mTerms;
     public LiveData<List<CourseEntity>> mCourses;
+    public LiveData<List<AssessmentEntity>> mAssessments;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -108,12 +109,26 @@ public class AppRepository {
         return mDb.termDao().getTermWithCourses(termId);
     }
 
+    public CourseWithAssessments getCourseWithAssessmentsById(int courseId) {
+        return mDb.courseDao().getCoursesWithAssessments(courseId);
+    }
+
     public void insertTerm(final TermEntity term) {
         insertCoursesForTerm(term);
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 mDb.termDao().insertTerm(term);
+            }
+        });
+    }
+
+    public void insertCourse(final CourseEntity course) {
+        insertAssessmentsForCourse(course);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.courseDao().insertCourse(course);
             }
         });
     }
@@ -141,7 +156,20 @@ public class AppRepository {
         }
     }
 
-    public LiveData<List<CourseEntity>> getCoursedByTermId(final int termId) {
+    public void deleteCourse(final CourseWithAssessments course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.courseDao().deleteCourse(course.course);
+            }
+        });
+    }
+
+    public LiveData<List<CourseEntity>> getCoursesByTermId(final int termId) {
         return mDb.courseDao().getCoursesByTermId(termId);
+    }
+
+    public LiveData<List<AssessmentEntity>> getAssessmentsByCourseId(int courseId) {
+        return mDb.assessmentDao().getAssessmentsByCourseId(courseId);
     }
 }

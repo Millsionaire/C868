@@ -36,7 +36,7 @@ public class TermEditorViewModel extends AndroidViewModel {
             public void run() {
                 TermWithCourses term = mRepository.getTermWithCoursesById(termId);
                 if (term.courses != null) {
-                    mCourses = mRepository.getCoursedByTermId(termId);
+                    mCourses = mRepository.getCoursesByTermId(termId);
                 }
                 mLiveTerm.postValue(term);
             }

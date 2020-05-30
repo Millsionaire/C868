@@ -36,4 +36,8 @@ interface CourseDao {
 
     @Query("SELECT * FROM courses WHERE title = :title")
     CourseEntity getIdByTitle(String title);
+
+    @Transaction
+    @Query("SELECT * FROM courses WHERE id = :id")
+    CourseWithAssessments getCoursesWithAssessments(int id);
 }

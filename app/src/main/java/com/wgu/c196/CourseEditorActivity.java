@@ -39,17 +39,29 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-    @BindView((R.id.start_date_text))
+    @BindView(R.id.start_date_text)
     TextView mStartDateText;
 
-    @BindView((R.id.end_date_text))
+    @BindView(R.id.end_date_text)
     TextView mEndDateText;
+
+    @BindView(R.id.mentor_name_text)
+    TextView mMentorName;
+
+    @BindView(R.id.mentor_phone_text)
+    TextView mMentorPhone;
+
+    @BindView(R.id.mentor_email_text)
+    TextView mMentorEmail;
 
     @OnClick(R.id.fab)
     public void fabClickHandler() {
         Intent intent = new Intent(this, AssessmentEditorActivity.class);
         startActivity(intent);
     }
+
+    @BindView(R.id.notes)
+    TextView mNotes;
 
     private CourseEditorViewModel courseEditorViewModel;
     private boolean mNewCourse, mEditing;
@@ -100,6 +112,10 @@ public class CourseEditorActivity extends AppCompatActivity {
                     mCourseText.setText(courseEntity.course.getTitle());
                     mStartDateText.setText(courseEntity.course.getStartDate().toString());
                     mEndDateText.setText(courseEntity.course.getEndDate().toString());
+                    mMentorName.setText(courseEntity.course.getMentor().getName());
+                    mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
+                    mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
+                    mNotes.setText(courseEntity.course.getNotes());
                     if (courseEntity.assessments != null) {
                         courseEditorViewModel.mAssessments.observe(CourseEditorActivity.this, assessmentObserver);
                     }

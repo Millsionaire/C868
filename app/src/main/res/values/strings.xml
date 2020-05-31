@@ -127,4 +127,12 @@
     <string name="due_date">Due Date</string>
     <string name="enter_due_date">Enter Due Date</string>
     <string name="assessments">Assessments</string>
+    <string name="mentor_phone_number">Mentor Phone Number</string>
+    <string name="enter_mentor_phone_number">Enter mentor phone number</string>
+    <string name="mentor_email">Mentor Email</string>
+    <string name="enter_mentor_email">Enter mentor email</string>
+    <string name="mentor_name">Mentor Name</string>
+    <string name="enter_mentor_name">Enter mentor name</string>
+    <string name="enter_course_notes_here">Enter course notes here</string>
+    <string name="course_notes">Course Notes</string>
 </resources>

@@ -5,8 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".TermEditorActivity"
-        tools:showIn="@layout/activity_term_editor">
+        tools:context=".CourseEditorActivity"
+        tools:showIn="@layout/activity_course_editor">
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,12 +18,12 @@
                 android:id="@+id/course_text_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
                 android:text="@string/course_name"
                 android:textSize="18sp"
-                android:layout_marginTop="@dimen/text_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
                 android:id="@+id/course_text"
@@ -64,8 +64,7 @@
                 android:layout_marginTop="@dimen/text_margin"
                 android:text="@string/end_date"
                 android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/start_date_text"
-                tools:layout_editor_absoluteX="31dp" />
+                app:layout_constraintTop_toBottomOf="@+id/start_date_text" />
 
         <EditText
                 android:id="@+id/end_date_text"
@@ -75,8 +74,64 @@
                 android:hint="@string/enter_end_date"
                 android:inputType="textMultiLine|textCapSentences"
                 app:layout_constraintTop_toBottomOf="@+id/end_date_label"
-                tools:ignore="TextFields"
-                tools:layout_editor_absoluteX="31dp" />
+                tools:ignore="TextFields" />
+
+        <TextView
+                android:id="@+id/mentor_name_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/mentor_name"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_text" />
+
+        <EditText
+                android:id="@+id/mentor_name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_mentor_name"
+                android:inputType="textMultiLine|textCapSentences"
+                app:layout_constraintTop_toBottomOf="@+id/mentor_name_label"
+                tools:ignore="TextFields" />
+
+        <TextView
+                android:id="@+id/mentor_phone_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/mentor_phone_number"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/mentor_name_text" />
+
+        <EditText
+                android:id="@+id/mentor_phone_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_mentor_phone_number"
+                android:inputType="textMultiLine"
+                app:layout_constraintTop_toBottomOf="@+id/mentor_phone_label"
+                tools:ignore="TextFields" />
+
+        <TextView
+                android:id="@+id/mentor_email_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/mentor_email"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/mentor_phone_text" />
+
+        <EditText
+                android:id="@+id/mentor_email_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_mentor_email"
+                android:inputType="textMultiLine"
+                app:layout_constraintTop_toBottomOf="@+id/mentor_email_label"
+                tools:ignore="TextFields" />
 
         <TextView
                 android:id="@+id/assessments_label"
@@ -87,8 +142,7 @@
                 android:textAllCaps="false"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/end_date_text"
-                tools:layout_editor_absoluteX="29dp" />
+                app:layout_constraintTop_toBottomOf="@+id/mentor_email_text" />
 
         <android.support.v7.widget.RecyclerView
                 android:id='@+id/recycler_view'
@@ -98,8 +152,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:scrollbars="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/assessments_label"
-                tools:layout_editor_absoluteX="29dp" />
+                app:layout_constraintTop_toBottomOf="@+id/assessments_label" />
 
         <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
@@ -109,5 +162,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_view"
                 app:srcCompat="@drawable/ic_add" />
+
+        <TextView
+                android:id="@+id/notes_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/course_notes"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/fab" />
+
+        <EditText
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_course_notes_here"
+                android:inputType="textMultiLine"
+                app:layout_constraintTop_toBottomOf="@+id/notes_label"
+                tools:ignore="TextFields" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

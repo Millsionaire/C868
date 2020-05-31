@@ -47,6 +47,9 @@ public class CourseEntity {
     @ColumnInfo(name = "mentor_id")
     private int mentorId;
 
+    @Ignore
+    private MentorEntity mentor;
+
     private String notes;
 
     @Ignore
@@ -226,5 +229,13 @@ public class CourseEntity {
 
     public void setAssessments(List<AssessmentEntity> assessments) {
         this.assessments = assessments;
+    }
+
+    public MentorEntity getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(MentorEntity mentor) {
+        this.mentor = mentor;
     }
 }

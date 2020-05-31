@@ -172,4 +172,8 @@ public class AppRepository {
     public LiveData<List<AssessmentEntity>> getAssessmentsByCourseId(int courseId) {
         return mDb.assessmentDao().getAssessmentsByCourseId(courseId);
     }
+
+    public MentorEntity getMentorById(int mentorId) {
+        return mDb.mentorDao().getMentorById(mentorId);
+    }
 }

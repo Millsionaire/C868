@@ -35,6 +35,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
                 if (course.assessments != null) {
                     mAssessments = mRepository.getAssessmentsByCourseId(courseId);
                 }
+                course.course.setMentor(mRepository.getMentorById(course.course.getMentorId()));
                 mLiveCourse.postValue(course);
             }
         });

@@ -1,6 +1,7 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.entities;
 
 import android.arch.persistence.room.*;
+import com.wgu.c196.database.converters.AssessmentTypeConverter;
 
 import java.util.Date;
 

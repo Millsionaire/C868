@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import com.wgu.c196.database.AppRepository;
-import com.wgu.c196.database.TermEntity;
+import com.wgu.c196.database.entities.TermEntity;
 
 import java.util.List;
 

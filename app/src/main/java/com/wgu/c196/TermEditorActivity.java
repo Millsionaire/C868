@@ -21,8 +21,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.wgu.c196.database.CourseEntity;
-import com.wgu.c196.database.TermWithCourses;
+import com.wgu.c196.database.entities.CourseEntity;
+import com.wgu.c196.database.entities.TermWithCourses;
 import com.wgu.c196.ui.CoursesAdapter;
 import com.wgu.c196.viewmodel.TermEditorViewModel;
 

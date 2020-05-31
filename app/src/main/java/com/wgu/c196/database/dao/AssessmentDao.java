@@ -1,12 +1,13 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.*;
+import com.wgu.c196.database.entities.AssessmentEntity;
 
 import java.util.List;
 
 @Dao
-interface AssessmentDao {
+public interface AssessmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAssessment(AssessmentEntity assessmentEntity);
 

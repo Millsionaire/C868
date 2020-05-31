@@ -1,4 +1,4 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.converters;
 
 import android.arch.persistence.room.TypeConverter;
 

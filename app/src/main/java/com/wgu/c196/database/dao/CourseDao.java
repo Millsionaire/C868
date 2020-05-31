@@ -1,12 +1,14 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.*;
+import com.wgu.c196.database.entities.CourseWithAssessments;
+import com.wgu.c196.database.entities.CourseEntity;
 
 import java.util.List;
 
 @Dao
-interface CourseDao {
+public interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCourse(CourseEntity courseEntity);
 

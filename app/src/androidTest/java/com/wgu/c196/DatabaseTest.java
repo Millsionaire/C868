@@ -7,8 +7,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.wgu.c196.database.AppDatabase;
-import com.wgu.c196.database.TermDao;
-import com.wgu.c196.database.TermEntity;
+import com.wgu.c196.database.dao.TermDao;
+import com.wgu.c196.database.entities.TermEntity;
 import com.wgu.c196.utilities.SampleData;
 
 import org.junit.After;

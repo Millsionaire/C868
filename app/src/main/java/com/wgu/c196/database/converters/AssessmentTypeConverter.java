@@ -1,10 +1,11 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.converters;
 
 import android.arch.persistence.room.TypeConverter;
+import com.wgu.c196.database.entities.AssessmentEntity;
 
-import static com.wgu.c196.database.AssessmentEntity.Type.*;
+import static com.wgu.c196.database.entities.AssessmentEntity.Type.*;
 
-class AssessmentTypeConverter {
+public class AssessmentTypeConverter {
     @TypeConverter
     public static AssessmentEntity.Type toType(int status) {
         if (status == PERFORMANCE.getCode()) {

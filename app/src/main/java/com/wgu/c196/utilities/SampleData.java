@@ -1,9 +1,8 @@
 package com.wgu.c196.utilities;
 
-import com.wgu.c196.database.AssessmentEntity;
-import com.wgu.c196.database.MentorEntity;
-import com.wgu.c196.database.TermEntity;
-import com.wgu.c196.database.CourseEntity;
+import com.wgu.c196.database.entities.AssessmentEntity;
+import com.wgu.c196.database.entities.TermEntity;
+import com.wgu.c196.database.entities.CourseEntity;
 
 import java.util.*;
 

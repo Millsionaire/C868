@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.wgu.c196.database.*;
+import com.wgu.c196.database.entities.AssessmentEntity;
+import com.wgu.c196.database.entities.CourseEntity;
+import com.wgu.c196.database.entities.CourseWithAssessments;
 
 import java.util.Date;
 import java.util.List;

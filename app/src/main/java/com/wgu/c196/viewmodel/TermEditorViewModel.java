@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import com.wgu.c196.database.AppRepository;
-import com.wgu.c196.database.CourseEntity;
-import com.wgu.c196.database.TermEntity;
-import com.wgu.c196.database.TermWithCourses;
+import com.wgu.c196.database.entities.CourseEntity;
+import com.wgu.c196.database.entities.TermEntity;
+import com.wgu.c196.database.entities.TermWithCourses;
 
 import java.util.Date;
 import java.util.List;

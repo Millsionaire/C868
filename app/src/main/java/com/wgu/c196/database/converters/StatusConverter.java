@@ -1,10 +1,11 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.converters;
 
 import android.arch.persistence.room.TypeConverter;
+import com.wgu.c196.database.entities.CourseEntity;
 
-import static com.wgu.c196.database.CourseEntity.Status.*;
+import static com.wgu.c196.database.entities.CourseEntity.Status.*;
 
-class StatusConverter {
+public class StatusConverter {
     @TypeConverter
     public static CourseEntity.Status toStatus(int status) {
         if (status == IN_PROGRESS.getCode()) {

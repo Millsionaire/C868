@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.CourseEditorActivity;
 import com.wgu.c196.R;
-import com.wgu.c196.database.CourseEntity;
+import com.wgu.c196.database.entities.CourseEntity;
 
 import java.util.List;
 

@@ -21,8 +21,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.wgu.c196.database.AssessmentEntity;
-import com.wgu.c196.database.CourseWithAssessments;
+import com.wgu.c196.database.entities.AssessmentEntity;
+import com.wgu.c196.database.entities.CourseWithAssessments;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
 

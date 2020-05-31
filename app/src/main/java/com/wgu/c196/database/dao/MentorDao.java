@@ -1,12 +1,13 @@
-package com.wgu.c196.database;
+package com.wgu.c196.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.*;
+import com.wgu.c196.database.entities.MentorEntity;
 
 import java.util.List;
 
 @Dao
-interface MentorDao {
+public interface MentorDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMentor(MentorEntity mentorEntity);
 

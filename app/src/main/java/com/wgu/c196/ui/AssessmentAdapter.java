@@ -12,15 +12,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.AssessmentEditorActivity;
-import com.wgu.c196.CourseEditorActivity;
 import com.wgu.c196.R;
-import com.wgu.c196.database.AssessmentEntity;
-import com.wgu.c196.database.CourseEntity;
+import com.wgu.c196.database.entities.AssessmentEntity;
 
 import java.util.List;
 
 import static com.wgu.c196.utilities.Constants.ASSESSMENT_ID_KEY;
-import static com.wgu.c196.utilities.Constants.COURSE_ID_KEY;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.ViewHolder> {
 

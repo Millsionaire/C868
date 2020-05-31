@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.wgu.c196.database.TermEntity;
+import com.wgu.c196.database.entities.TermEntity;
 import com.wgu.c196.ui.TermsAdapter;
 import com.wgu.c196.viewmodel.TermsViewModel;
 

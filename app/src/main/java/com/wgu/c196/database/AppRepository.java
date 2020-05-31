@@ -3,10 +3,9 @@ package com.wgu.c196.database;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import com.wgu.c196.utilities.Constants;
+import com.wgu.c196.database.entities.*;
 import com.wgu.c196.utilities.SampleData;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

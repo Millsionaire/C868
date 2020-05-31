@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.wgu.c196.R;
 import com.wgu.c196.TermEditorActivity;
-import com.wgu.c196.database.TermEntity;
+import com.wgu.c196.database.entities.TermEntity;
 
 import java.util.List;
 

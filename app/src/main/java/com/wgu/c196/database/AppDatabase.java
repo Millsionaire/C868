@@ -1,10 +1,18 @@
 package com.wgu.c196.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.*;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import com.wgu.c196.database.converters.AssessmentTypeConverter;
+import com.wgu.c196.database.converters.DateConverter;
+import com.wgu.c196.database.converters.StatusConverter;
+import com.wgu.c196.database.dao.AssessmentDao;
+import com.wgu.c196.database.dao.CourseDao;
+import com.wgu.c196.database.dao.MentorDao;
+import com.wgu.c196.database.dao.TermDao;
+import com.wgu.c196.database.entities.AssessmentEntity;
+import com.wgu.c196.database.entities.CourseEntity;
+import com.wgu.c196.database.entities.MentorEntity;
+import com.wgu.c196.database.entities.TermEntity;
 
 @Database(entities = {TermEntity.class, CourseEntity.class, MentorEntity.class, AssessmentEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({DateConverter.class, StatusConverter.class, AssessmentTypeConverter.class})

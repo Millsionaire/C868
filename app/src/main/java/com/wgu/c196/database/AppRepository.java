@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import com.wgu.c196.database.entities.*;
 import com.wgu.c196.utilities.SampleData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -174,5 +175,21 @@ public class AppRepository {
 
     public MentorEntity getMentorById(int mentorId) {
         return mDb.mentorDao().getMentorById(mentorId);
+    }
+
+    public AssessmentEntity getAssessmentById(int assessmentId) {
+        return mDb.assessmentDao().getAssessmentById(assessmentId);
+    }
+
+    public void insertAssessment(AssessmentEntity assessment) {
+        mDb.assessmentDao().insertAssessment(assessment);
+    }
+
+    public void deleteAssessment(AssessmentEntity assessment) {
+        mDb.assessmentDao().deleteAssessment(assessment);
+    }
+
+    public LiveData<List<AssessmentEntity>> getAssessmentTypes() {
+        return mDb.assessmentDao().getAll();
     }
 }

@@ -135,4 +135,7 @@
     <string name="enter_mentor_name">Enter mentor name</string>
     <string name="enter_course_notes_here">Enter course notes here</string>
     <string name="course_notes">Course Notes</string>
+    <string name="assessment_type">Assessment Type</string>
+    <string name="new_assessment">New Assessment</string>
+    <string name="edit_assessment">Edit Assessment</string>
 </resources>

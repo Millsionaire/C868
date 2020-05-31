@@ -17,11 +17,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 import com.wgu.c196.database.entities.AssessmentEntity;
+import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.database.entities.CourseWithAssessments;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
@@ -60,6 +64,9 @@ public class CourseEditorActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @BindView(R.id.status_spinner)
+    Spinner mSpinner;
+
     @BindView(R.id.notes)
     TextView mNotes;
 
@@ -67,6 +74,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private boolean mNewCourse, mEditing;
     private AssessmentAdapter mAdapter;
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
+    private ArrayAdapter<CourseEntity.Status> courseStatusAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +92,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         }
         initRecyclerView();
         initViewModel();
+        loadSpinnerItems();
     }
 
     private void initViewModel() {
@@ -115,6 +124,8 @@ public class CourseEditorActivity extends AppCompatActivity {
                     mMentorName.setText(courseEntity.course.getMentor().getName());
                     mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
+                    int position = getSpinnerPosition(courseEntity.course.getStatus());
+                    mSpinner.setSelection(position);
                     mNotes.setText(courseEntity.course.getNotes());
                     if (courseEntity.assessments != null) {
                         courseEditorViewModel.mAssessments.observe(CourseEditorActivity.this, assessmentObserver);
@@ -141,6 +152,26 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), layoutManager.getOrientation());
         mRecyclerView.addItemDecoration(divider);
+    }
+
+    private void loadSpinnerItems() {
+        CourseEntity.Status[] statuses = CourseEntity.Status.values();
+        courseStatusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, statuses);
+        mSpinner.setAdapter(courseStatusAdapter);
+    }
+
+    private CourseEntity.Status getSpinnerValue() {
+        return (CourseEntity.Status) mSpinner.getSelectedItem();
+    }
+
+    private int getSpinnerPosition(CourseEntity.Status courseStatus) {
+        return courseStatusAdapter.getPosition(courseStatus);
+    }
+
+
+    @OnItemSelected(R.id.status_spinner)
+    public void spinnerItemSelected(Spinner spinner, int position) {
+        // code here
     }
 
     @Override

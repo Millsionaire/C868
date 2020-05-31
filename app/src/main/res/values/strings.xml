@@ -138,4 +138,6 @@
     <string name="assessment_type">Assessment Type</string>
     <string name="new_assessment">New Assessment</string>
     <string name="edit_assessment">Edit Assessment</string>
+    <string name="status">Status</string>
+    <string name="mentor_information">Mentor Information</string>
 </resources>

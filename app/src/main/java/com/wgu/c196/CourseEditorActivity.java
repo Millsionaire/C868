@@ -1,5 +1,6 @@
 package com.wgu.c196;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -31,8 +32,12 @@ import com.wgu.c196.database.entities.MentorEntity;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static com.wgu.c196.utilities.Constants.*;
 
@@ -82,6 +87,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private ArrayAdapter<CourseEntity.Status> courseStatusAdapter;
     private ArrayAdapter<String> courseMentorAdapter;
     private int currentMentorPosition;
+    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +97,8 @@ public class CourseEditorActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 
         ButterKnife.bind(this);
 
@@ -137,8 +145,8 @@ public class CourseEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable CourseWithAssessments courseEntity) {
                 if (courseEntity != null && !mEditing) {
                     mCourseText.setText(courseEntity.course.getTitle());
-                    mStartDateText.setText(courseEntity.course.getStartDate().toString());
-                    mEndDateText.setText(courseEntity.course.getEndDate().toString());
+                    mStartDateText.setText(dateFormat.format(courseEntity.course.getStartDate()));
+                    mEndDateText.setText(dateFormat.format(courseEntity.course.getEndDate()));
                     mMentorName.setText(courseEntity.course.getMentor().getName());
                     mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
@@ -229,7 +237,11 @@ public class CourseEditorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            saveAndReturn();
+            try {
+                saveAndReturn();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
             try {
@@ -265,11 +277,18 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        saveAndReturn();
+        try {
+            saveAndReturn();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void saveAndReturn() {
-        courseEditorViewModel.saveTerm(mCourseText.getText().toString());
+    private void saveAndReturn() throws ParseException {
+        Date startDate = dateFormat.parse(mStartDateText.getText().toString());
+        Date endDate = dateFormat.parse(mEndDateText.getText().toString());
+        CourseEntity course = new CourseEntity(mCourseText.getText().toString(), startDate, endDate, mNotes.getText().toString());
+        courseEditorViewModel.saveTerm(course);
         finish();
     }
 

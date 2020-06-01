@@ -112,13 +112,20 @@ public class CourseEntity {
      * @param startDate Date
      * @param endDate   Date
      */
-    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status, int mentorId, String notes) {
+    public CourseEntity(int id, String title, Date startDate, Date endDate, Status status, String notes) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
-        this.mentorId = mentorId;
+        this.notes = notes;
+    }
+
+    @Ignore
+    public CourseEntity(String title, Date startDate, Date endDate, String notes) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.notes = notes;
     }
 

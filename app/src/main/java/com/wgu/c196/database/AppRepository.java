@@ -43,6 +43,8 @@ public class AppRepository {
             @Override
             public void run() {
                 mDb.mentorDao().insertMentor(new MentorEntity(1, "Becky Stovall", "555-222-4444", "bstovall@wgu.edu"));
+                mDb.mentorDao().insertMentor(new MentorEntity(2, "John Doe", "444-333-2222", "jdoe@wgu.edu"));
+                mDb.mentorDao().insertMentor(new MentorEntity(3, "Jane Doe", "777-333-7654", "jane_doe@wgu.edu"));
                 mDb.termDao().insertAll(SampleData.getTerms());
 
                 for (TermEntity term : SampleData.getTerms()) {
@@ -193,5 +195,9 @@ public class AppRepository {
 
     public void deleteAssessment(AssessmentEntity assessment) {
         mDb.assessmentDao().deleteAssessment(assessment);
+    }
+
+    public MentorEntity getMentorByName(String mentorName) {
+        return mDb.mentorDao().getMentorByName(mentorName);
     }
 }

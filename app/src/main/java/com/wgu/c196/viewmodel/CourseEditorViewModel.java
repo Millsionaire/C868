@@ -70,4 +70,19 @@ public class CourseEditorViewModel extends AndroidViewModel {
             throw new SQLiteConstraintException(e.getMessage());
         }
     }
+
+    public void updateMentor(String mentorName) {
+        final String finalMentorName = mentorName;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                MentorEntity mentor = mRepository.getMentorByName(finalMentorName);
+                CourseWithAssessments courseWithAssessments = mLiveCourse.getValue();
+                courseWithAssessments.course.setMentorId(mentor.getId());
+                courseWithAssessments.course.setMentor(mentor);
+                mRepository.insertCourse(courseWithAssessments.course);
+                mLiveCourse.postValue(courseWithAssessments);
+            }
+        });
+    }
 }

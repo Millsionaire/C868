@@ -81,6 +81,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private List<String> mentors = new ArrayList<>();
     private ArrayAdapter<CourseEntity.Status> courseStatusAdapter;
     private ArrayAdapter<String> courseMentorAdapter;
+    private int currentMentorPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +143,8 @@ public class CourseEditorActivity extends AppCompatActivity {
                     mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
 
-                    int mentorPosition = getMentorSpinnerPosition(courseEntity.course.getMentor().getName());
-                    mMentorSpinner.setSelection(mentorPosition);
+                    currentMentorPosition = getMentorSpinnerPosition(courseEntity.course.getMentor().getName());
+                    mMentorSpinner.setSelection(currentMentorPosition);
 
                     int coursePosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
                     mStatusSpinner.setSelection(coursePosition);
@@ -210,7 +211,10 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     @OnItemSelected(R.id.mentor_spinner)
     public void spinnerMentorItemSelected(Spinner spinner, int position) {
-        return;
+        if (currentMentorPosition != position) {
+            courseEditorViewModel.updateMentor(spinner.getSelectedItem().toString());
+        }
+
     }
 
     @Override

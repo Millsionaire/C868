@@ -32,6 +32,9 @@ public interface MentorDao {
     @Query("SELECT COUNT(*) FROM mentors")
     int getCount();
 
+    @Query("SELECT * FROM mentors WHERE name = :name")
+    MentorEntity getMentorByName(String name);
+
 //    @Query("SELECT * FROM mentors WHERE term_id = :termId")
 //    LiveData<List<MentorEntity>> getMentorsByTermId(int termId);
 }

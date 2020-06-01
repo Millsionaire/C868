@@ -17,6 +17,7 @@ public class AppRepository {
     public LiveData<List<TermEntity>> mTerms;
     public LiveData<List<CourseEntity>> mCourses;
     public LiveData<List<AssessmentEntity>> mAssessments;
+    public LiveData<List<MentorEntity>> mMentors;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -30,6 +31,11 @@ public class AppRepository {
     private AppRepository(Context context) {
         mDb = AppDatabase.getInstance(context);
         mTerms = getAllTerms();
+        mMentors = getAllMentors();
+    }
+
+    private LiveData<List<MentorEntity>> getAllMentors() {
+        return mDb.mentorDao().getAll();
     }
 
     public void addSampleData() {
@@ -187,9 +193,5 @@ public class AppRepository {
 
     public void deleteAssessment(AssessmentEntity assessment) {
         mDb.assessmentDao().deleteAssessment(assessment);
-    }
-
-    public LiveData<List<AssessmentEntity>> getAssessmentTypes() {
-        return mDb.assessmentDao().getAll();
     }
 }

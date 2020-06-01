@@ -11,6 +11,7 @@ import com.wgu.c196.database.*;
 import com.wgu.c196.database.entities.AssessmentEntity;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.database.entities.CourseWithAssessments;
+import com.wgu.c196.database.entities.MentorEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
 
     public MutableLiveData<CourseWithAssessments> mLiveCourse = new MutableLiveData<>();
     public LiveData<List<AssessmentEntity>> mAssessments;
+    public LiveData<List<MentorEntity>> mMentors;
     private AppRepository mRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -28,6 +30,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
         super(application);
         mRepository = AppRepository.getInstance(getApplication());
         mAssessments = mRepository.mAssessments;
+        mMentors = mRepository.mMentors;
     }
 
     public void loadData(final int courseId) {

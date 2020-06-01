@@ -1,6 +1,7 @@
 package com.wgu.c196.database.entities;
 
 import android.arch.persistence.room.*;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "mentors",
         indices = {@Index(value = {"name", "phoneNumber", "email"},
@@ -84,5 +85,11 @@ public class MentorEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return ""+ name +"";
     }
 }

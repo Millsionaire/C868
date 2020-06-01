@@ -76,12 +76,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/end_date_label"
                 tools:ignore="TextFields" />
 
+        <TextView
+                android:id="@+id/mentor_select_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/select_mentor"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_text"/>
+
         <Spinner
                 android:id="@+id/mentor_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/end_date_text"/>
+                app:layout_constraintTop_toBottomOf="@+id/mentor_select_label"/>
 
         <TextView
                 android:id="@+id/mentor_information"

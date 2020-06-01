@@ -27,6 +27,7 @@ import butterknife.OnItemSelected;
 import com.wgu.c196.database.entities.AssessmentEntity;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.database.entities.CourseWithAssessments;
+import com.wgu.c196.database.entities.MentorEntity;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
 
@@ -49,6 +50,9 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.end_date_text)
     TextView mEndDateText;
 
+    @BindView(R.id.mentor_spinner)
+    Spinner mMentorSpinner;
+
     @BindView(R.id.mentor_name_text)
     TextView mMentorName;
 
@@ -65,7 +69,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     }
 
     @BindView(R.id.status_spinner)
-    Spinner mSpinner;
+    Spinner mStatusSpinner;
 
     @BindView(R.id.notes)
     TextView mNotes;
@@ -74,7 +78,9 @@ public class CourseEditorActivity extends AppCompatActivity {
     private boolean mNewCourse, mEditing;
     private AssessmentAdapter mAdapter;
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
+    private List<String> mentors = new ArrayList<>();
     private ArrayAdapter<CourseEntity.Status> courseStatusAdapter;
+    private ArrayAdapter<String> courseMentorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +96,10 @@ public class CourseEditorActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mEditing = savedInstanceState.getBoolean(EDITING_KEY);
         }
+        loadMentorSpinnerItems();
         initRecyclerView();
         initViewModel();
-        loadSpinnerItems();
+        loadCourseStatusSpinnerItems();
     }
 
     private void initViewModel() {
@@ -114,6 +121,16 @@ public class CourseEditorActivity extends AppCompatActivity {
             }
         };
 
+        courseEditorViewModel.mMentors.observe(this, new Observer<List<MentorEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<MentorEntity> mentorEntityList) {
+                for (MentorEntity mentor: mentorEntityList) {
+                    mentors.add(mentor.toString());
+                }
+                loadMentorSpinnerItems();
+            }
+        });
+
         courseEditorViewModel.mLiveCourse.observe(this, new Observer<CourseWithAssessments>() {
             @Override
             public void onChanged(@Nullable CourseWithAssessments courseEntity) {
@@ -124,8 +141,13 @@ public class CourseEditorActivity extends AppCompatActivity {
                     mMentorName.setText(courseEntity.course.getMentor().getName());
                     mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
-                    int position = getSpinnerPosition(courseEntity.course.getStatus());
-                    mSpinner.setSelection(position);
+
+                    int mentorPosition = getMentorSpinnerPosition(courseEntity.course.getMentor().getName());
+                    mMentorSpinner.setSelection(mentorPosition);
+
+                    int coursePosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
+                    mStatusSpinner.setSelection(coursePosition);
+
                     mNotes.setText(courseEntity.course.getNotes());
                     if (courseEntity.assessments != null) {
                         courseEditorViewModel.mAssessments.observe(CourseEditorActivity.this, assessmentObserver);
@@ -154,24 +176,41 @@ public class CourseEditorActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(divider);
     }
 
-    private void loadSpinnerItems() {
-        CourseEntity.Status[] statuses = CourseEntity.Status.values();
-        courseStatusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, statuses);
-        mSpinner.setAdapter(courseStatusAdapter);
+    private void loadCourseStatusSpinnerItems() {
+        courseStatusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, CourseEntity.Status.values());
+        mStatusSpinner.setAdapter(courseStatusAdapter);
     }
 
-    private CourseEntity.Status getSpinnerValue() {
-        return (CourseEntity.Status) mSpinner.getSelectedItem();
+    private void loadMentorSpinnerItems() {
+        courseMentorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mentors);
+        mMentorSpinner.setAdapter(courseMentorAdapter);
     }
 
-    private int getSpinnerPosition(CourseEntity.Status courseStatus) {
+    private CourseEntity.Status getCourseSpinnerValue() {
+        return (CourseEntity.Status) mStatusSpinner.getSelectedItem();
+    }
+
+    private MentorEntity getMentorSpinnerValue() {
+        return (MentorEntity) mMentorSpinner.getSelectedItem();
+    }
+
+    private int getStatusSpinnerPosition(CourseEntity.Status courseStatus) {
         return courseStatusAdapter.getPosition(courseStatus);
+    }
+
+    private int getMentorSpinnerPosition(String mentorName) {
+        return courseMentorAdapter.getPosition(mentorName);
     }
 
 
     @OnItemSelected(R.id.status_spinner)
-    public void spinnerItemSelected(Spinner spinner, int position) {
-        // code here
+    public void spinnerStatusItemSelected(Spinner spinner, int position) {
+        return;
+    }
+
+    @OnItemSelected(R.id.mentor_spinner)
+    public void spinnerMentorItemSelected(Spinner spinner, int position) {
+        return;
     }
 
     @Override

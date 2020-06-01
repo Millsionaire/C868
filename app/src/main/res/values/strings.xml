@@ -140,4 +140,5 @@
     <string name="edit_assessment">Edit Assessment</string>
     <string name="status">Status</string>
     <string name="mentor_information">Mentor Information</string>
+    <string name="select_mentor">Select Mentor</string>
 </resources>

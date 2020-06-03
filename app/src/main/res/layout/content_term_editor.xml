@@ -79,6 +79,14 @@
                 tools:layout_editor_absoluteX="31dp" />
 
         <TextView
+                android:id="@+id/course_add_term_save_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/courses_can_be_added_once_a_term_is_saved"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_text" />
+
+        <TextView
                 android:id="@+id/courses_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

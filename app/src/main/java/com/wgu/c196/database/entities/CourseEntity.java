@@ -79,6 +79,43 @@ public class CourseEntity {
     }
 
     /**
+     * Constructor for creating a new course with an auto-generated id
+     *
+     * @param title
+     * @param startDate
+     * @param endDate
+     * @param notes
+     */
+    @Ignore
+    public CourseEntity(String title, int termId, Date startDate, Date endDate, String notes) {
+        this.title = title;
+        this.termId = termId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.notes = notes;
+    }
+
+    /**
+     * Constructor for creating a new course with an auto-generated id and no notes or assessments
+     *
+     * @param title
+     * @param startDate
+     * @param endDate
+     * @param status
+     * @param notes
+     */
+    @Ignore
+    public CourseEntity(String title, int termId, Date startDate, Date endDate, Status status, int mentorId, String notes) {
+        this.title = title;
+        this.termId = termId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.mentorId = mentorId;
+        this.notes = notes;
+    }
+
+    /**
      * Constructor for creating a new course with an auto-generated id and no notes or assessments
      *
      * @param title
@@ -122,7 +159,8 @@ public class CourseEntity {
     }
 
     @Ignore
-    public CourseEntity(String title, Date startDate, Date endDate, String notes) {
+    public CourseEntity(int termId, String title, Date startDate, Date endDate, String notes) {
+        this.termId = termId;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;

@@ -35,6 +35,9 @@ public interface MentorDao {
     @Query("SELECT * FROM mentors WHERE name = :name")
     MentorEntity getMentorByName(String name);
 
+    @Query("SELECT * FROM mentors ORDER BY id ASC LIMIT 1")
+    MentorEntity getFirstMentor();
+
 //    @Query("SELECT * FROM mentors WHERE term_id = :termId")
 //    LiveData<List<MentorEntity>> getMentorsByTermId(int termId);
 }

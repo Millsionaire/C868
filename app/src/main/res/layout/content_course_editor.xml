@@ -77,6 +77,33 @@
                 tools:ignore="TextFields" />
 
         <TextView
+                android:id="@+id/notes_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/course_notes"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_text" />
+
+        <EditText
+                android:id="@+id/notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_course_notes_here"
+                android:inputType="textMultiLine"
+                app:layout_constraintTop_toBottomOf="@+id/notes_label"
+                tools:ignore="TextFields" />
+
+        <TextView
+                android:id="@+id/must_save_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/must_save_course_text"
+                app:layout_constraintTop_toBottomOf="@+id/notes"/>
+
+        <TextView
                 android:id="@+id/mentor_select_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +111,7 @@
                 android:text="@string/select_mentor"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/end_date_text"/>
+                app:layout_constraintTop_toBottomOf="@+id/notes"/>
 
         <Spinner
                 android:id="@+id/mentor_spinner"
@@ -107,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/enter_mentor_name"
+                android:hint="@string/select_mentor_from_list"
                 android:inputType="textMultiLine|textCapSentences"
                 app:layout_constraintTop_toBottomOf="@+id/mentor_information"
                 tools:ignore="TextFields" />
@@ -117,7 +144,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/enter_mentor_phone_number"
                 android:inputType="textMultiLine"
                 app:layout_constraintTop_toBottomOf="@+id/mentor_name_text"
                 tools:ignore="TextFields" />
@@ -127,7 +153,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:hint="@string/enter_mentor_email"
                 android:inputType="textMultiLine"
                 app:layout_constraintTop_toBottomOf="@+id/mentor_phone_text"
                 tools:ignore="TextFields" />
@@ -150,25 +175,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/status_label" />
 
         <TextView
-                android:id="@+id/notes_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/text_margin"
-                android:text="@string/course_notes"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/status_spinner" />
-
-        <EditText
-                android:id="@+id/notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:hint="@string/enter_course_notes_here"
-                android:inputType="textMultiLine"
-                app:layout_constraintTop_toBottomOf="@+id/notes_label"
-                tools:ignore="TextFields" />
-
-        <TextView
                 android:id="@+id/assessments_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,7 +183,7 @@
                 android:textAllCaps="false"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/notes" />
+                app:layout_constraintTop_toBottomOf="@+id/status_spinner" />
 
         <android.support.v7.widget.RecyclerView
                 android:id='@+id/recycler_view'

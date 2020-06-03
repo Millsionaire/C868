@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,15 +31,14 @@ import com.wgu.c196.database.entities.AssessmentEntity;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.database.entities.CourseWithAssessments;
 import com.wgu.c196.database.entities.MentorEntity;
+import com.wgu.c196.services.TimeFormatService;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import static com.wgu.c196.utilities.Constants.*;
 
@@ -46,17 +47,26 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.course_text)
     TextView mCourseText;
 
-    @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
-
     @BindView(R.id.start_date_text)
     TextView mStartDateText;
 
     @BindView(R.id.end_date_text)
     TextView mEndDateText;
 
+    @BindView(R.id.notes)
+    TextView mNotes;
+
+    @BindView(R.id.must_save_text)
+    TextView mMustSaveText;
+
     @BindView(R.id.mentor_spinner)
     Spinner mMentorSpinner;
+
+    @BindView(R.id.mentor_select_label)
+    TextView mMentorSelectLabel;
+
+    @BindView(R.id.mentor_information)
+    TextView mMentorInfoText;
 
     @BindView(R.id.mentor_name_text)
     TextView mMentorName;
@@ -67,18 +77,28 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.mentor_email_text)
     TextView mMentorEmail;
 
+    @BindView(R.id.status_label)
+    TextView mStatusLabel;
+
+    @BindView(R.id.status_spinner)
+    Spinner mStatusSpinner;
+
+    @BindView(R.id.assessments_label)
+    TextView mAssessmentsLabel;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+
     @OnClick(R.id.fab)
     public void fabClickHandler() {
         Intent intent = new Intent(this, AssessmentEditorActivity.class);
         startActivity(intent);
     }
 
-    @BindView(R.id.status_spinner)
-    Spinner mStatusSpinner;
-
-    @BindView(R.id.notes)
-    TextView mNotes;
-
+    private int mTermId;
     private CourseEditorViewModel courseEditorViewModel;
     private boolean mNewCourse, mEditing;
     private AssessmentAdapter mAdapter;
@@ -87,7 +107,6 @@ public class CourseEditorActivity extends AppCompatActivity {
     private ArrayAdapter<CourseEntity.Status> courseStatusAdapter;
     private ArrayAdapter<String> courseMentorAdapter;
     private int currentMentorPosition;
-    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +117,6 @@ public class CourseEditorActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-
         ButterKnife.bind(this);
 
         if (savedInstanceState != null) {
@@ -107,11 +124,16 @@ public class CourseEditorActivity extends AppCompatActivity {
         }
         loadMentorSpinnerItems();
         initRecyclerView();
-        initViewModel();
+        try {
+            initViewModel();
+        } catch (Exception e) {
+            e.printStackTrace();
+            finish();
+        }
         loadCourseStatusSpinnerItems();
     }
 
-    private void initViewModel() {
+    private void initViewModel() throws Exception {
         courseEditorViewModel = ViewModelProviders.of(this).get(CourseEditorViewModel.class);
 
         final Observer<List<AssessmentEntity>> assessmentObserver = new Observer<List<AssessmentEntity>>() {
@@ -145,8 +167,8 @@ public class CourseEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable CourseWithAssessments courseEntity) {
                 if (courseEntity != null && !mEditing) {
                     mCourseText.setText(courseEntity.course.getTitle());
-                    mStartDateText.setText(dateFormat.format(courseEntity.course.getStartDate()));
-                    mEndDateText.setText(dateFormat.format(courseEntity.course.getEndDate()));
+                    mStartDateText.setText(TimeFormatService.dateFormat.format(courseEntity.course.getStartDate()));
+                    mEndDateText.setText(TimeFormatService.dateFormat.format(courseEntity.course.getEndDate()));
                     mMentorName.setText(courseEntity.course.getMentor().getName());
                     mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
@@ -166,14 +188,37 @@ public class CourseEditorActivity extends AppCompatActivity {
         });
 
         Bundle extras = getIntent().getExtras();
-        if (extras == null) {
+        mTermId = extras.getInt(TERM_ID_KEY);
+        if (mTermId == 0) {
+            throw new Exception("Invalid term id given to course editor activity");
+        }
+
+        if (extras.getBoolean("NEW_COURSE")) {
             setTitle(getString(R.string.new_course));
             mNewCourse = true;
+            showOrHideElements(View.VISIBLE, View.GONE);
         } else {
             setTitle(getString(R.string.edit_course));
             int courseId = extras.getInt(COURSE_ID_KEY);
+            showOrHideElements(View.GONE, View.VISIBLE);
             courseEditorViewModel.loadData(courseId);
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void showOrHideElements(int hideElements, int showElements) {
+        mMustSaveText.setVisibility(hideElements);
+        mMentorSelectLabel.setVisibility(showElements);
+        mMentorSpinner.setVisibility(showElements);
+        mMentorInfoText.setVisibility(showElements);
+        mMentorName.setVisibility(showElements);
+        mMentorPhone.setVisibility(showElements);
+        mMentorEmail.setVisibility(showElements);
+        mStatusLabel.setVisibility(showElements);
+        mStatusSpinner.setVisibility(showElements);
+        mAssessmentsLabel.setVisibility(showElements);
+        mRecyclerView.setVisibility(showElements);
+        mFab.setVisibility(showElements);
     }
 
     private void initRecyclerView() {
@@ -222,7 +267,6 @@ public class CourseEditorActivity extends AppCompatActivity {
         if (currentMentorPosition != position) {
             courseEditorViewModel.updateMentor(spinner.getSelectedItem().toString());
         }
-
     }
 
     @Override
@@ -284,11 +328,33 @@ public class CourseEditorActivity extends AppCompatActivity {
         }
     }
 
+    private void showAlert(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder((mCourseText.getContext()));
+        builder.setMessage(message);
+        builder.setCancelable(true);
+        builder.setPositiveButton(R.string.alert_ok_text,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     private void saveAndReturn() throws ParseException {
-        Date startDate = dateFormat.parse(mStartDateText.getText().toString());
-        Date endDate = dateFormat.parse(mEndDateText.getText().toString());
-        CourseEntity course = new CourseEntity(mCourseText.getText().toString(), startDate, endDate, mNotes.getText().toString());
-        courseEditorViewModel.saveTerm(course);
+        Date startDate;
+        Date endDate;
+        try {
+            startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
+            endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
+        } catch (Exception e) {
+            showAlert(getString(R.string.invalidDateMessage));
+            return;
+        }
+
+        CourseEntity course = new CourseEntity(mTermId, mCourseText.getText().toString(), startDate, endDate, mNotes.getText().toString());
+        courseEditorViewModel.saveCourse(course);
         finish();
     }
 

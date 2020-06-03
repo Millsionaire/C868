@@ -18,6 +18,7 @@ import com.wgu.c196.database.entities.CourseEntity;
 import java.util.List;
 
 import static com.wgu.c196.utilities.Constants.COURSE_ID_KEY;
+import static com.wgu.c196.utilities.Constants.TERM_ID_KEY;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder> {
 
@@ -46,6 +47,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CourseEditorActivity.class);
+                intent.putExtra(TERM_ID_KEY, course.getTermId());
                 intent.putExtra(COURSE_ID_KEY, course.getId());
                 mContext.startActivity(intent);
             }

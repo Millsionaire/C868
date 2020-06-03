@@ -1,5 +1,6 @@
 package com.wgu.c196;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,16 +19,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.wgu.c196.database.entities.CourseEntity;
+import com.wgu.c196.database.entities.TermEntity;
 import com.wgu.c196.database.entities.TermWithCourses;
+import com.wgu.c196.services.TimeFormatService;
 import com.wgu.c196.ui.CoursesAdapter;
 import com.wgu.c196.viewmodel.TermEditorViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.wgu.c196.utilities.Constants.*;
@@ -45,9 +52,20 @@ public class TermEditorActivity extends AppCompatActivity {
     @BindView((R.id.end_date_text))
     TextView mEndDateText;
 
+    @BindView(R.id.courses_label)
+    TextView mCoursesLabel;
+
+    @BindView(R.id.course_add_term_save_text)
+    TextView mAddCourseText;
+
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+
     @OnClick(R.id.fab)
     public void fabClickHandler() {
-        Intent intent = new Intent(this, TermEditorActivity.class);
+        Intent intent = new Intent(this, CourseEditorActivity.class);
+        intent.putExtra(TERM_ID_KEY, termEditorViewModel.mLiveTerm.getValue().term.getId());
+        intent.putExtra("NEW_COURSE", true);
         startActivity(intent);
     }
 
@@ -98,8 +116,8 @@ public class TermEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable TermWithCourses termEntity) {
                 if (termEntity != null && !mEditing) {
                     mTermText.setText(termEntity.term.getTitle());
-                    mStartDateText.setText(termEntity.term.getStartDate().toString());
-                    mEndDateText.setText(termEntity.term.getEndDate().toString());
+                    mStartDateText.setText(TimeFormatService.dateFormat.format(termEntity.term.getStartDate()));
+                    mEndDateText.setText(TimeFormatService.dateFormat.format(termEntity.term.getEndDate()));
                     if (termEntity.courses != null) {
                         termEditorViewModel.mCourses.observe(TermEditorActivity.this, coursesObserver);
                     }
@@ -111,11 +129,21 @@ public class TermEditorActivity extends AppCompatActivity {
         if (extras == null) {
             setTitle(getString(R.string.new_term));
             mNewTerm = true;
+            showOrHideCourses(View.VISIBLE, View.GONE);
         } else {
             setTitle(getString(R.string.edit_term));
             int termId = extras.getInt(TERM_ID_KEY);
+            showOrHideCourses(View.GONE, View.VISIBLE);
             termEditorViewModel.loadData(termId);
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void showOrHideCourses(int hideCourses, int showCourses) {
+        mAddCourseText.setVisibility(hideCourses);
+        mCoursesLabel.setVisibility(showCourses);
+        mRecyclerView.setVisibility(showCourses);
+        mFab.setVisibility(showCourses);
     }
 
     private void initRecyclerView() {
@@ -140,7 +168,11 @@ public class TermEditorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            saveAndReturn();
+            try {
+                saveAndReturn();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
             try {
@@ -176,11 +208,22 @@ public class TermEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        saveAndReturn();
+        try {
+            saveAndReturn();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void saveAndReturn() {
-        termEditorViewModel.saveTerm(mTermText.getText().toString());
+    private boolean save() throws ParseException {
+        Date startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
+        Date endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
+        TermEntity term = new TermEntity(mTermText.getText().toString(), startDate, endDate);
+        return termEditorViewModel.saveTerm(term);
+    }
+
+    private void saveAndReturn() throws ParseException {
+        save();
         finish();
     }
 

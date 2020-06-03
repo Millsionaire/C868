@@ -200,4 +200,8 @@ public class AppRepository {
     public MentorEntity getMentorByName(String mentorName) {
         return mDb.mentorDao().getMentorByName(mentorName);
     }
+
+    public MentorEntity getFirstMentor() {
+        return mDb.mentorDao().getFirstMentor();
+    }
 }

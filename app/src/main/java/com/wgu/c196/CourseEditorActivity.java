@@ -3,7 +3,6 @@ package com.wgu.c196;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -109,6 +108,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private ArrayAdapter<CourseEntity.Status> courseStatusAdapter;
     private ArrayAdapter<String> courseMentorAdapter;
     private int currentMentorPosition;
+    private int currentStatusPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +176,10 @@ public class CourseEditorActivity extends AppCompatActivity {
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());
 
                     currentMentorPosition = getMentorSpinnerPosition(courseEntity.course.getMentor().getName());
+                    currentStatusPosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
+
                     mMentorSpinner.setSelection(currentMentorPosition);
+                    mStatusSpinner.setSelection(currentStatusPosition);
 
                     int coursePosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
                     mStatusSpinner.setSelection(coursePosition);
@@ -261,7 +264,9 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     @OnItemSelected(R.id.status_spinner)
     public void spinnerStatusItemSelected(Spinner spinner, int position) {
-        return;
+        if (currentStatusPosition != position) {
+            courseEditorViewModel.updateStatus(spinner.getSelectedItem().toString());
+        }
     }
 
     @OnItemSelected(R.id.mentor_spinner)

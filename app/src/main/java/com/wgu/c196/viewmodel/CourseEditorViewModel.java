@@ -58,7 +58,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
                 public void run() {
                     CourseEntity course;
                     MentorEntity mentor = mRepository.getFirstMentor();
-                    course = new CourseEntity(newCourse.getTitle(), newCourse.getTermId(), new Date(), new Date(),CourseEntity.Status.PLAN_TO_TAKE, mentor.getId(), newCourse.getNotes());
+                    course = new CourseEntity(newCourse.getTitle(), newCourse.getTermId(), new Date(), new Date(), CourseEntity.Status.PLAN_TO_TAKE, mentor.getId(), newCourse.getNotes());
                     mRepository.insertCourse(course);
                 }
             });
@@ -96,5 +96,12 @@ public class CourseEditorViewModel extends AndroidViewModel {
                 mLiveCourse.postValue(courseWithAssessments);
             }
         });
+    }
+
+    public void updateStatus(String status) {
+        CourseWithAssessments courseWithAssessments = mLiveCourse.getValue();
+        courseWithAssessments.course.setStatus(CourseEntity.Status.valueOf(status));
+        mRepository.insertCourse(courseWithAssessments.course);
+        mLiveCourse.postValue(courseWithAssessments);
     }
 }

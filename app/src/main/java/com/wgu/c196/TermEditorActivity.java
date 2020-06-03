@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.database.entities.TermEntity;
 import com.wgu.c196.database.entities.TermWithCourses;
+import com.wgu.c196.services.AlertDialogService;
 import com.wgu.c196.services.TimeFormatService;
 import com.wgu.c196.ui.CoursesAdapter;
 import com.wgu.c196.viewmodel.TermEditorViewModel;
@@ -215,16 +216,25 @@ public class TermEditorActivity extends AppCompatActivity {
         }
     }
 
-    private boolean save() throws ParseException {
-        Date startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
-        Date endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
+    private boolean save() {
+        Date startDate;
+        Date endDate;
+        try {
+            startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
+            endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
+        } catch (Exception e) {
+            AlertDialogService.showAlert(getString(R.string.invalidDateMessage), mTermText.getContext());
+            return false;
+        }
+
         TermEntity term = new TermEntity(mTermText.getText().toString(), startDate, endDate);
         return termEditorViewModel.saveTerm(term);
     }
 
     private void saveAndReturn() throws ParseException {
-        save();
-        finish();
+        if (save()) {
+            finish();
+        }
     }
 
     @Override

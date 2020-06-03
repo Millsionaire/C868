@@ -3,6 +3,7 @@ package com.wgu.c196;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -31,6 +32,7 @@ import com.wgu.c196.database.entities.AssessmentEntity;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.database.entities.CourseWithAssessments;
 import com.wgu.c196.database.entities.MentorEntity;
+import com.wgu.c196.services.AlertDialogService;
 import com.wgu.c196.services.TimeFormatService;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
@@ -281,11 +283,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            try {
-                saveAndReturn();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            saveAndReturn();
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
             try {
@@ -321,35 +319,19 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        try {
-            saveAndReturn();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        saveAndReturn();
     }
 
-    private void showAlert(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder((mCourseText.getContext()));
-        builder.setMessage(message);
-        builder.setCancelable(true);
-        builder.setPositiveButton(R.string.alert_ok_text,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
 
-    private void saveAndReturn() throws ParseException {
+
+    private void saveAndReturn() {
         Date startDate;
         Date endDate;
         try {
             startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
             endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
         } catch (Exception e) {
-            showAlert(getString(R.string.invalidDateMessage));
+            AlertDialogService.showAlert(getString(R.string.invalidDateMessage), mCourseText.getContext());
             return;
         }
 

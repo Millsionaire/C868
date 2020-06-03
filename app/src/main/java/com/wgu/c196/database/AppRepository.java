@@ -82,7 +82,7 @@ public class AppRepository {
         return mDb.termDao().getAll();
     }
 
-    public void deleteAllTerms() {
+    public void deleteAllData() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -92,13 +92,13 @@ public class AppRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.mentorDao().deleteAll();
+                mDb.courseDao().deleteAll();
             }
         });
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.courseDao().deleteAll();
+                mDb.mentorDao().deleteAll();
             }
         });
         executor.execute(new Runnable() {

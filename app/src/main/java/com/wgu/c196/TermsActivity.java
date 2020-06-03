@@ -97,15 +97,15 @@ public class TermsActivity extends AppCompatActivity {
             addSampleData();
             return true;
         } else if (id == R.id.action_delete_all) {
-            deleteAllNotes();
+            deleteAllData();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllNotes() {
-        termsViewModel.deleteAllNotes();
+    private void deleteAllData() {
+        termsViewModel.deleteAllData();
     }
 
     private void addSampleData() {

@@ -145,4 +145,6 @@
     <string name="courses_can_be_added_once_a_term_is_saved">Courses can be added once a term is saved.</string>
     <string name="must_save_course_text">Mentors, assessments, and course status can be updated after saving course.</string>
     <string name="invalidDateMessage">Please enter a valid start and end date.</string>
+    <string name="channel_name">alarm alert</string>
+    <string name="channel_description">alarm for start and end dates</string>
 </resources>

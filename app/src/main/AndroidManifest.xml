@@ -12,7 +12,7 @@
         <activity
                 android:name=".AssessmentEditorActivity"
                 android:label="@string/title_activity_assessment_editor"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".CourseEditorActivity"
                 android:label="@string/title_activity_course_editor"
@@ -40,6 +40,11 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.wgu.c196.TermsActivity" />
         </activity>
+
+        <receiver
+                android:name="com.wgu.c196.AlarmReceiver"
+                android:resource="@drawable/ic_baseline_access_time"
+                android:exported="false" />
     </application>
 
 </manifest>

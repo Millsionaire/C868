@@ -1,8 +1,11 @@
 package com.wgu.c196;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -249,8 +253,8 @@ public class CourseEditorActivity extends AppCompatActivity {
         return (CourseEntity.Status) mStatusSpinner.getSelectedItem();
     }
 
-    private MentorEntity getMentorSpinnerValue() {
-        return (MentorEntity) mMentorSpinner.getSelectedItem();
+    private String getMentorSpinnerValue() {
+        return mMentorSpinner.getSelectedItem().toString();
     }
 
     private int getStatusSpinnerPosition(CourseEntity.Status courseStatus) {
@@ -261,18 +265,17 @@ public class CourseEditorActivity extends AppCompatActivity {
         return courseMentorAdapter.getPosition(mentorName);
     }
 
-
     @OnItemSelected(R.id.status_spinner)
     public void spinnerStatusItemSelected(Spinner spinner, int position) {
         if (currentStatusPosition != position) {
-            courseEditorViewModel.updateStatus(spinner.getSelectedItem().toString());
+            courseEditorViewModel.updateStatus(getCourseSpinnerValue());
         }
     }
 
     @OnItemSelected(R.id.mentor_spinner)
     public void spinnerMentorItemSelected(Spinner spinner, int position) {
         if (currentMentorPosition != position) {
-            courseEditorViewModel.updateMentor(spinner.getSelectedItem().toString());
+            courseEditorViewModel.updateMentor(getMentorSpinnerValue());
         }
     }
 
@@ -339,10 +342,26 @@ public class CourseEditorActivity extends AppCompatActivity {
             AlertDialogService.showAlert(getString(R.string.invalidDateMessage), mCourseText.getContext());
             return;
         }
-
         CourseEntity course = new CourseEntity(mTermId, mCourseText.getText().toString(), startDate, endDate, mNotes.getText().toString());
         courseEditorViewModel.saveCourse(course);
+
+        int courseId = courseEditorViewModel.mLiveCourse.getValue().course.getId();
+
+        long startDateMilli = startDate.getTime();
+        String startMessage = "Course Starting! " + mCourseText.getText().toString() + " is about to begin. " + startDate;
+        String startTitle = "Course starting soon!";
+        setAlarm(startDateMilli, startMessage, startTitle, courseId);
+
+        long endDateMilli = endDate.getTime();
+        String endMessage = "Course Ending! " + mCourseText.getText().toString() + " is about to end. " + endDate;
+        String endTitle = "Course ending soon!";
+        setAlarm(endDateMilli, endMessage, endTitle, courseId);
+
         finish();
+    }
+
+    private void setAlarm(long when, String message, String title, int courseId){
+          AlarmReceiver.setAlarm(getApplicationContext(), when, message, title, courseId, "course");
     }
 
     @Override

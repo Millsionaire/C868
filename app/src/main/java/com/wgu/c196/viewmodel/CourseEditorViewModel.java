@@ -98,9 +98,9 @@ public class CourseEditorViewModel extends AndroidViewModel {
         });
     }
 
-    public void updateStatus(String status) {
+    public void updateStatus(CourseEntity.Status status) {
         CourseWithAssessments courseWithAssessments = mLiveCourse.getValue();
-        courseWithAssessments.course.setStatus(CourseEntity.Status.valueOf(status));
+        courseWithAssessments.course.setStatus(status);
         mRepository.insertCourse(courseWithAssessments.course);
         mLiveCourse.postValue(courseWithAssessments);
     }

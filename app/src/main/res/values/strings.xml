@@ -147,4 +147,5 @@
     <string name="invalidDateMessage">Please enter a valid start and end date.</string>
     <string name="channel_name">alarm alert</string>
     <string name="channel_description">alarm for start and end dates</string>
+    <string name="share">Share</string>
 </resources>

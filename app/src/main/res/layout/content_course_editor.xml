@@ -78,11 +78,23 @@
 
         <TextView
                 android:id="@+id/notes_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="286dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="@dimen/text_margin"
                 android:text="@string/course_notes"
                 android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/end_date_text" />
+
+        <Button
+                android:id="@+id/shareNotesButton"
+                android:layout_width="82dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/share"
+                app:layout_constraintStart_toEndOf="@+id/notes_label"
                 app:layout_constraintTop_toBottomOf="@+id/end_date_text" />
 
         <EditText
@@ -101,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_margin"
                 android:text="@string/must_save_course_text"
-                app:layout_constraintTop_toBottomOf="@+id/notes"/>
+                app:layout_constraintTop_toBottomOf="@+id/notes" />
 
         <TextView
                 android:id="@+id/mentor_select_label"
@@ -111,14 +123,14 @@
                 android:text="@string/select_mentor"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notes"/>
+                app:layout_constraintTop_toBottomOf="@+id/notes" />
 
         <Spinner
                 android:id="@+id/mentor_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mentor_select_label"/>
+                app:layout_constraintTop_toBottomOf="@+id/mentor_select_label" />
 
         <TextView
                 android:id="@+id/mentor_information"

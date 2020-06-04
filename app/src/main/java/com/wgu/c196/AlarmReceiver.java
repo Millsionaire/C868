@@ -77,17 +77,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         return alarmPreferences.getInt(NEXT_ID, 1);
     }
 
+
+    private static int getAndIncrementNextId(Context context) {
+        int nextId = getNextId(context);
+        incrementNextId(context);
+        return nextId;
+    }
+
     private static void incrementNextId(Context context) {
         SharedPreferences alarmPreferences = context.getSharedPreferences(alarmCounterFile, Context.MODE_PRIVATE);
         int nextId = alarmPreferences.getInt(NEXT_ID, 1);
         SharedPreferences.Editor alarmEditor = alarmPreferences.edit();
         alarmEditor.putInt(NEXT_ID, nextId++);
         alarmEditor.apply();
-    }
-
-    private static int getAndIncrementNextId(Context context) {
-        int nextId = getNextId(context);
-        incrementNextId(context);
-        return nextId;
     }
 }

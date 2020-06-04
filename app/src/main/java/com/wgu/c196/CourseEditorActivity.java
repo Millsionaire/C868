@@ -25,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -97,10 +98,24 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton mFab;
 
+    @BindView(R.id.shareNotesButton)
+    Button mButton;
+
     @OnClick(R.id.fab)
     public void fabClickHandler() {
         Intent intent = new Intent(this, AssessmentEditorActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.shareNotesButton)
+    public void btnClickHandler() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mNotes.getText().toString());
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
     }
 
     private int mTermId;
@@ -329,8 +344,6 @@ public class CourseEditorActivity extends AppCompatActivity {
     public void onBackPressed() {
         saveAndReturn();
     }
-
-
 
     private void saveAndReturn() {
         Date startDate;

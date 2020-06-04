@@ -66,7 +66,7 @@ public class TermEditorActivity extends AppCompatActivity {
     public void fabClickHandler() {
         Intent intent = new Intent(this, CourseEditorActivity.class);
         intent.putExtra(TERM_ID_KEY, termEditorViewModel.mLiveTerm.getValue().term.getId());
-        intent.putExtra("NEW_COURSE", true);
+        intent.putExtra(NEW_COURSE, true);
         startActivity(intent);
     }
 
@@ -161,7 +161,7 @@ public class TermEditorActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNewTerm) {
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_term_editor, menu);
+            inflater.inflate(R.menu.menu_editor, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }

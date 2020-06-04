@@ -125,7 +125,7 @@
     <string name="assessment_name">Assessment Name</string>
     <string name="enter_assessment_name">Enter Assessment Name</string>
     <string name="due_date">Due Date</string>
-    <string name="enter_due_date">Enter Due Date</string>
+    <string name="enter_due_date">MM/DD/YYYY HH:MM:SS AM/PM</string>
     <string name="assessments">Assessments</string>
     <string name="mentor_phone_number">Mentor Phone Number</string>
     <string name="enter_mentor_phone_number">Enter mentor phone number</string>
@@ -148,4 +148,5 @@
     <string name="channel_name">alarm alert</string>
     <string name="channel_description">alarm for start and end dates</string>
     <string name="share">Share</string>
+    <string name="must_save_assessment_text">Assessment type can be updated once assessment is saved.</string>
 </resources>

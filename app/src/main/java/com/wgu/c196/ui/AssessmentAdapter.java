@@ -18,6 +18,7 @@ import com.wgu.c196.database.entities.AssessmentEntity;
 import java.util.List;
 
 import static com.wgu.c196.utilities.Constants.ASSESSMENT_ID_KEY;
+import static com.wgu.c196.utilities.Constants.COURSE_ID_KEY;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.ViewHolder> {
 
@@ -47,6 +48,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AssessmentEditorActivity.class);
                 intent.putExtra(ASSESSMENT_ID_KEY, assessment.getId());
+                intent.putExtra(COURSE_ID_KEY, assessment.getCourseId());
                 mContext.startActivity(intent);
             }
         });

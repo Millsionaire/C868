@@ -1,20 +1,14 @@
 package com.wgu.c196;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +35,6 @@ import com.wgu.c196.services.TimeFormatService;
 import com.wgu.c196.ui.AssessmentAdapter;
 import com.wgu.c196.viewmodel.CourseEditorViewModel;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +97,8 @@ public class CourseEditorActivity extends AppCompatActivity {
     @OnClick(R.id.fab)
     public void fabClickHandler() {
         Intent intent = new Intent(this, AssessmentEditorActivity.class);
+        intent.putExtra(COURSE_ID_KEY, courseEditorViewModel.mLiveCourse.getValue().course.getId());
+        intent.putExtra(NEW_ASSESSMENT, true);
         startActivity(intent);
     }
 
@@ -199,9 +194,9 @@ public class CourseEditorActivity extends AppCompatActivity {
 
                     mMentorSpinner.setSelection(currentMentorPosition);
                     mStatusSpinner.setSelection(currentStatusPosition);
-
-                    int coursePosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
-                    mStatusSpinner.setSelection(coursePosition);
+//
+//                    int coursePosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
+//                    mStatusSpinner.setSelection(coursePosition);
 
                     mNotes.setText(courseEntity.course.getNotes());
                     if (courseEntity.assessments != null) {
@@ -217,7 +212,7 @@ public class CourseEditorActivity extends AppCompatActivity {
             throw new Exception("Invalid term id given to course editor activity");
         }
 
-        if (extras.getBoolean("NEW_COURSE")) {
+        if (extras.getBoolean(NEW_COURSE)) {
             setTitle(getString(R.string.new_course));
             mNewCourse = true;
             showOrHideElements(View.VISIBLE, View.GONE);
@@ -298,7 +293,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNewCourse) {
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_term_editor, menu);
+            inflater.inflate(R.menu.menu_editor, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -314,30 +309,12 @@ public class CourseEditorActivity extends AppCompatActivity {
                     courseEditorViewModel.deleteCourse();
                     finish();
                 }
-                showDeleteCourseWithAssessmentssErrorAlert();
             } catch (SQLiteConstraintException e) {
-                showDeleteCourseWithAssessmentssErrorAlert();
+                AlertDialogService.showAlert(getString(R.string.course_delete_alert_message), mCourseText.getContext());
             }
 
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void showDeleteCourseWithAssessmentssErrorAlert() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(mCourseText.getContext());
-        builder1.setMessage(R.string.course_delete_alert_message);
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                R.string.alert_ok_text,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
     }
 
     @Override

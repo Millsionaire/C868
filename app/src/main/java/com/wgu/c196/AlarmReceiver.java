@@ -16,9 +16,8 @@ import static com.wgu.c196.utilities.Constants.ASSESSMENT_ID_KEY;
 import static com.wgu.c196.utilities.Constants.COURSE_ID_KEY;
 
 public class AlarmReceiver extends BroadcastReceiver {
-
-    public static final String alarmCounterFile = "alarmCounterFile";
     public static final String NEXT_ID = "nextId";
+    public static final String alarmCounterFile = "alarmCounterFile";
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -76,7 +75,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmPreferences = context.getSharedPreferences(alarmCounterFile, Context.MODE_PRIVATE);
         return alarmPreferences.getInt(NEXT_ID, 1);
     }
-
 
     private static int getAndIncrementNextId(Context context) {
         int nextId = getNextId(context);

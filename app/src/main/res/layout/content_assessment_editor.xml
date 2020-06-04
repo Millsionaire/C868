@@ -58,6 +58,14 @@
                 tools:layout_editor_absoluteX="29dp" />
 
         <TextView
+                android:id="@+id/must_save_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/must_save_assessment_text"
+                app:layout_constraintTop_toBottomOf="@+id/due_date_text" />
+
+        <TextView
                 android:id="@+id/assessment_type_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

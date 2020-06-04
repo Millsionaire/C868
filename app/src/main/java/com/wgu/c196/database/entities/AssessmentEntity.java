@@ -33,7 +33,7 @@ public class AssessmentEntity {
      * Enumerated Values: 0 (Active), 1 (Inactive), 2 (Completed)
      */
     @TypeConverters(AssessmentTypeConverter.class)
-    private AssessmentEntity.Type type;
+    private Type type;
 
     public AssessmentEntity(int id, int courseId, String title, Date dueDate, Type type) {
         this.id = id;
@@ -49,6 +49,13 @@ public class AssessmentEntity {
         this.title = title;
         this.dueDate = dueDate;
         this.type = type;
+    }
+
+    @Ignore
+    public AssessmentEntity(int courseId, String title, Date dueDate) {
+        this.courseId = courseId;
+        this.title = title;
+        this.dueDate = dueDate;
     }
 
     @Ignore

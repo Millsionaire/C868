@@ -57,13 +57,24 @@
                 tools:ignore="TextFields"
                 tools:layout_editor_absoluteX="29dp" />
 
+        <Button
+                android:id="@+id/set_alarm_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFCC5B"
+                android:inputType="textCapSentences"
+                android:text="@string/set_alarm_button"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/due_date_text" />
+
         <TextView
                 android:id="@+id/must_save_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/text_margin"
                 android:text="@string/must_save_assessment_text"
-                app:layout_constraintTop_toBottomOf="@+id/due_date_text" />
+                app:layout_constraintTop_toBottomOf="@+id/set_alarm_btn" />
 
         <TextView
                 android:id="@+id/assessment_type_label"
@@ -72,7 +83,7 @@
                 android:layout_marginTop="@dimen/text_margin"
                 android:text="@string/assessment_type"
                 android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/due_date_text"
+                app:layout_constraintTop_toBottomOf="@+id/set_alarm_btn"
                 tools:layout_editor_absoluteX="0dp" />
 
         <Spinner

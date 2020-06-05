@@ -52,6 +52,9 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.end_date_text)
     TextView mEndDateText;
 
+    @BindView(R.id.set_alarm_btn)
+    Button mAlarmBtn;
+
     @BindView(R.id.notes)
     TextView mNotes;
 
@@ -92,7 +95,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     FloatingActionButton mFab;
 
     @BindView(R.id.shareNotesButton)
-    Button mButton;
+    Button mShareNotesButton;
 
     @OnClick(R.id.fab)
     public void fabClickHandler() {
@@ -103,7 +106,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.shareNotesButton)
-    public void btnClickHandler() {
+    public void shareNotesBtnClickHandler() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, mNotes.getText().toString());
@@ -111,6 +114,34 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
+    }
+
+    @OnClick(R.id.set_alarm_btn)
+    public void setAlarmBtnClickHandler() {
+        Date startDate = TimeFormatService.getFormattedDate(mStartDateText.getText().toString(), getString(R.string.invalidDateMessage), mCourseText.getContext());
+        Date endDate = TimeFormatService.getFormattedDate(mEndDateText.getText().toString(), getString(R.string.invalidDateMessage), mCourseText.getContext());
+        if (startDate == null || endDate == null) {
+            return;
+        }
+
+        CourseWithAssessments course = courseEditorViewModel.mLiveCourse.getValue();
+        if (course != null && course.course != null) {
+            try {
+                long startDateMilli = startDate.getTime();
+                String startMessage = "Course Starting! " + mCourseText.getText().toString() + " is about to begin. " + startDate;
+                String startTitle = "Course starting soon!";
+                setAlarm(startDateMilli, startMessage, startTitle, course.course.getId());
+
+                long endDateMilli = endDate.getTime();
+                String endMessage = "Course Ending! " + mCourseText.getText().toString() + " is about to end. " + endDate;
+                String endTitle = "Course ending soon!";
+                setAlarm(endDateMilli, endMessage, endTitle, course.course.getId());
+            } catch (Exception e) {
+                AlertDialogService.showAlert("Something went wrong when setting alarms", mCourseText.getContext());
+                return;
+            }
+            AlertDialogService.showAlert("Alarm set for " + mCourseText.getText().toString(), mCourseText.getContext());
+        }
     }
 
     private int mTermId;
@@ -194,9 +225,6 @@ public class CourseEditorActivity extends AppCompatActivity {
 
                     mMentorSpinner.setSelection(currentMentorPosition);
                     mStatusSpinner.setSelection(currentStatusPosition);
-//
-//                    int coursePosition = getStatusSpinnerPosition(courseEntity.course.getStatus());
-//                    mStatusSpinner.setSelection(coursePosition);
 
                     mNotes.setText(courseEntity.course.getNotes());
                     if (courseEntity.assessments != null) {
@@ -226,6 +254,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     private void showOrHideElements(int hideElements, int showElements) {
+        mAlarmBtn.setVisibility(showElements);
         mMustSaveText.setVisibility(hideElements);
         mMentorSelectLabel.setVisibility(showElements);
         mMentorSpinner.setVisibility(showElements);
@@ -323,30 +352,13 @@ public class CourseEditorActivity extends AppCompatActivity {
     }
 
     private void saveAndReturn() {
-        Date startDate;
-        Date endDate;
-        try {
-            startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
-            endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
-        } catch (Exception e) {
-            AlertDialogService.showAlert(getString(R.string.invalidDateMessage), mCourseText.getContext());
+        Date startDate = TimeFormatService.getFormattedDate(mStartDateText.getText().toString(), getString(R.string.invalidDateMessage), mCourseText.getContext());
+        Date endDate = TimeFormatService.getFormattedDate(mEndDateText.getText().toString(), getString(R.string.invalidDateMessage), mCourseText.getContext());
+        if (startDate == null || endDate == null) {
             return;
         }
         CourseEntity course = new CourseEntity(mTermId, mCourseText.getText().toString(), startDate, endDate, mNotes.getText().toString());
         courseEditorViewModel.saveCourse(course);
-
-        int courseId = courseEditorViewModel.mLiveCourse.getValue().course.getId();
-
-        long startDateMilli = startDate.getTime();
-        String startMessage = "Course Starting! " + mCourseText.getText().toString() + " is about to begin. " + startDate;
-        String startTitle = "Course starting soon!";
-        setAlarm(startDateMilli, startMessage, startTitle, courseId);
-
-        long endDateMilli = endDate.getTime();
-        String endMessage = "Course Ending! " + mCourseText.getText().toString() + " is about to end. " + endDate;
-        String endTitle = "Course ending soon!";
-        setAlarm(endDateMilli, endMessage, endTitle, courseId);
-
         finish();
     }
 

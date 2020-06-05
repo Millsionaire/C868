@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import com.wgu.c196.database.entities.AssessmentEntity;
 import com.wgu.c196.services.AlertDialogService;
@@ -42,6 +44,32 @@ public class AssessmentEditorActivity extends AppCompatActivity {
 
     @BindView(R.id.must_save_text)
     TextView mMustSaveText;
+
+    @BindView(R.id.set_alarm_btn)
+    Button mAlarmBtn;
+
+    @OnClick(R.id.set_alarm_btn)
+    public void setAlarmClickHandler() {
+        Date dueDate = TimeFormatService.getFormattedDate(mDueDate.getText().toString(),getString(R.string.invalidDateMessage), mAssessmentText.getContext());
+        if (dueDate == null) {
+            return;
+        }
+        AssessmentEntity savedAssessment = assessmentEditorViewModel.mLiveAssessment.getValue();
+        if (savedAssessment != null) {
+            try {
+                long dueDateMilli = dueDate.getTime();
+                String message = "Assessment Due: " + mAssessmentText.getText().toString();
+                String title = mAssessmentText.getText().toString() + " Due Now";
+                AlarmReceiver.setAlarm(getApplicationContext(), dueDateMilli, message, title, savedAssessment.getId(), "assessment");
+            } catch (Exception e) {
+                e.printStackTrace();
+                AlertDialogService.showAlert("Something went wrong when setting alarm for due date", mAssessmentText.getContext());
+                return;
+            }
+            AlertDialogService.showAlert("Alarm set for " + mAssessmentText.getText().toString(), mAssessmentText.getContext());
+        }
+
+    }
 
     private AssessmentEditorViewModel assessmentEditorViewModel;
     private boolean mNewAssessment, mEditing;
@@ -107,6 +135,7 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     }
 
     private void showOrHideElements(int hideElements, int showElements) {
+        mAlarmBtn.setVisibility(showElements);
         mMustSaveText.setVisibility(hideElements);
         mSpinner.setVisibility(showElements);
         mSpinnerLabel.setVisibility(showElements);
@@ -154,24 +183,12 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     }
 
     private void saveAndReturn() {
-        Date dueDate;
-        try {
-            dueDate = TimeFormatService.dateFormat.parse(mDueDate.getText().toString());
-        } catch (Exception e) {
-            AlertDialogService.showAlert(getString(R.string.invalidDateMessage), mAssessmentText.getContext());
+        Date dueDate = TimeFormatService.getFormattedDate(mDueDate.getText().toString(),getString(R.string.invalidDateMessage), mAssessmentText.getContext());
+        if (dueDate == null) {
             return;
         }
         AssessmentEntity assessment = new AssessmentEntity(mCourseId, mAssessmentText.getText().toString(), dueDate);
         assessmentEditorViewModel.saveAssessment(assessment);
-
-        AssessmentEntity savedAssessment = assessmentEditorViewModel.mLiveAssessment.getValue();
-        if (savedAssessment != null) {
-            long dueDateMilli = dueDate.getTime();
-            String message = "Assessment Due: " + mAssessmentText.getText().toString();
-            String title = mAssessmentText.getText().toString() + " Due Now";
-            AlarmReceiver.setAlarm(getApplicationContext(), dueDateMilli, message, title, savedAssessment.getId(), "assessment");
-        }
-
         finish();
     }
 

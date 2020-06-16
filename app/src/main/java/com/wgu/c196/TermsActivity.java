@@ -66,6 +66,7 @@ public class TermsActivity extends AppCompatActivity {
                     }
                 };
         termsViewModel = ViewModelProviders.of(this).get(TermsViewModel.class);
+        termsViewModel.addMentors();
         termsViewModel.mTerms.observe(this, termsObserver);
     }
 

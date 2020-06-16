@@ -21,6 +21,8 @@ public class TermsViewModel extends AndroidViewModel {
         mTerms = mRepository.mTerms;
     }
 
+    public void addMentors() { mRepository.addMentors(); }
+
     public void addSampleData() {
         mRepository.addSampleData();
     }

@@ -51,7 +51,7 @@ public class TermEditorViewModel extends AndroidViewModel {
             if (TextUtils.isEmpty(newTerm.getTitle().trim())) {
                 return false;
             }
-            term = new TermEntity(newTerm.getTitle(), new Date(), new Date());
+            term = new TermEntity(newTerm.getTitle(), newTerm.getStartDate(), newTerm.getEndDate());
         } else {
             term = termWithCourses.term;
             term.setTitle(newTerm.getTitle());

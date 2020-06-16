@@ -113,8 +113,8 @@
     <string name="term_delete_alert_message">Terms cannot be deleted if they contain courses. Please remove all courses before deleting.</string>
     <string name="course_delete_alert_message">Courses cannot be deleted if they contain assessments. Please remove all assessments before deleting.</string>
     <string name="alert_ok_text">Got it</string>
-    <string name="enter_start_date">Enter Start Date MM/DD/YYYY</string>
-    <string name="enter_end_date">Enter End Date MM/DD/YYYY</string>
+    <string name="enter_start_date">Enter Start Date MM/DD/YYYY HH:MM:SS (AM or PM)</string>
+    <string name="enter_end_date">Enter End Date MM/DD/YYYY HH:MM:SS (AM or PM)</string>
     <string name="term_name">Term Name</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>

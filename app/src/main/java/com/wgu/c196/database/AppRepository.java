@@ -18,6 +18,7 @@ public class AppRepository {
     public LiveData<List<CourseEntity>> mCourses;
     public LiveData<List<AssessmentEntity>> mAssessments;
     public LiveData<List<MentorEntity>> mMentors;
+    public LiveData<List<CourseEntity>> mReportCourses;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -32,6 +33,7 @@ public class AppRepository {
         mDb = AppDatabase.getInstance(context);
         mTerms = getAllTerms();
         mMentors = getAllMentors();
+        mReportCourses = getAllCourses();
     }
 
     private LiveData<List<MentorEntity>> getAllMentors() {
@@ -79,6 +81,8 @@ public class AppRepository {
     private LiveData<List<TermEntity>> getAllTerms() {
         return mDb.termDao().getAll();
     }
+
+    private LiveData<List<CourseEntity>> getAllCourses() { return mDb.courseDao().getAll(); }
 
     public void deleteAllData() {
         executor.execute(new Runnable() {

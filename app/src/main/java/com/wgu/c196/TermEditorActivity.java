@@ -117,8 +117,8 @@ public class TermEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable TermWithCourses termEntity) {
                 if (termEntity != null && !mEditing) {
                     mTermText.setText(termEntity.term.getTitle());
-                    mStartDateText.setText(TimeFormatService.dateFormat.format(termEntity.term.getStartDate()));
-                    mEndDateText.setText(TimeFormatService.dateFormat.format(termEntity.term.getEndDate()));
+                    mStartDateText.setText(TimeFormatService.dateTimeFormat.format(termEntity.term.getStartDate()));
+                    mEndDateText.setText(TimeFormatService.dateTimeFormat.format(termEntity.term.getEndDate()));
                     if (termEntity.courses != null) {
                         termEditorViewModel.mCourses.observe(TermEditorActivity.this, coursesObserver);
                     }
@@ -220,8 +220,8 @@ public class TermEditorActivity extends AppCompatActivity {
         Date startDate;
         Date endDate;
         try {
-            startDate = TimeFormatService.dateFormat.parse(mStartDateText.getText().toString());
-            endDate = TimeFormatService.dateFormat.parse(mEndDateText.getText().toString());
+            startDate = TimeFormatService.dateTimeFormat.parse(mStartDateText.getText().toString());
+            endDate = TimeFormatService.dateTimeFormat.parse(mEndDateText.getText().toString());
         } catch (Exception e) {
             AlertDialogService.showAlert(getString(R.string.invalidDateMessage), mTermText.getContext());
             return false;

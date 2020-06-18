@@ -214,8 +214,8 @@ public class CourseEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable CourseWithAssessments courseEntity) {
                 if (courseEntity != null && !mEditing) {
                     mCourseText.setText(courseEntity.course.getTitle());
-                    mStartDateText.setText(TimeFormatService.dateFormat.format(courseEntity.course.getStartDate()));
-                    mEndDateText.setText(TimeFormatService.dateFormat.format(courseEntity.course.getEndDate()));
+                    mStartDateText.setText(TimeFormatService.dateTimeFormat.format(courseEntity.course.getStartDate()));
+                    mEndDateText.setText(TimeFormatService.dateTimeFormat.format(courseEntity.course.getEndDate()));
                     mMentorName.setText(courseEntity.course.getMentor().getName());
                     mMentorPhone.setText(courseEntity.course.getMentor().getPhoneNumber());
                     mMentorEmail.setText(courseEntity.course.getMentor().getEmail());

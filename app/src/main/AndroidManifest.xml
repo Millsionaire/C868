@@ -10,6 +10,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".CourseReportActivity"
+                android:label="@string/title_activity_course_report"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
                 android:name=".AssessmentEditorActivity"
                 android:label="@string/title_activity_assessment_editor"
                 android:theme="@style/AppTheme.NoActionBar" />
@@ -42,9 +46,9 @@
         </activity>
 
         <receiver
-                android:name="com.wgu.c196.AlarmReceiver"
-                android:resource="@drawable/ic_baseline_access_time"
-                android:exported="false" />
+                android:name=".AlarmReceiver"
+                android:exported="false"
+                android:resource="@drawable/ic_baseline_access_time" />
     </application>
 
 </manifest>

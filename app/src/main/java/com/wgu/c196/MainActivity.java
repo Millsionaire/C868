@@ -16,9 +16,15 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @OnClick(R.id.button)
+    @OnClick(R.id.terms_button)
     void onClickTermsButton() {
         Intent intent = new Intent(this, TermsActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.course_report_button)
+    void onClickCourseReportButton() {
+        Intent intent = new Intent(this, CourseReportActivity.class);
         startActivity(intent);
     }
 

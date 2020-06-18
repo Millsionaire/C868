@@ -109,7 +109,7 @@ public class AssessmentEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable AssessmentEntity assessmentEntity) {
                 if (assessmentEntity != null && !mEditing) {
                     mAssessmentText.setText(assessmentEntity.getTitle());
-                    mDueDate.setText(TimeFormatService.dateFormat.format(assessmentEntity.getDueDate()));
+                    mDueDate.setText(TimeFormatService.dateTimeFormat.format(assessmentEntity.getDueDate()));
 
                     currentPosition = getSpinnerPosition(assessmentEntity.getType());
                     mSpinner.setSelection(currentPosition);

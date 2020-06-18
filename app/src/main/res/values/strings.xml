@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">C196</string>
+    <string name="app_name">Sterling University</string>
     <string name="action_add_sample_data">Add sample data</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -150,4 +150,9 @@
     <string name="share">Share</string>
     <string name="must_save_assessment_text">Assessment type can be updated once assessment is saved.</string>
     <string name="set_alarm_button">Set alarm for current start/end dates</string>
+    <string name="course_btn_text">Courses</string>
+    <string name="title_activity_course_report">Course Report</string>
+    <string name="course_report_header_title">Course Title</string>
+    <string name="course_report_header_start_date">Start Date</string>
+    <string name="course_report_header_end_date">End Date</string>
 </resources>

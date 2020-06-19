@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import com.wgu.c196.database.entities.*;
 import com.wgu.c196.utilities.SampleData;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -44,7 +43,6 @@ public class AppRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-
                 mDb.termDao().insertAll(SampleData.getTerms());
 
                 for (TermEntity term : SampleData.getTerms()) {
@@ -95,12 +93,6 @@ public class AppRepository {
             @Override
             public void run() {
                 mDb.courseDao().deleteAll();
-            }
-        });
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mDb.mentorDao().deleteAll();
             }
         });
         executor.execute(new Runnable() {

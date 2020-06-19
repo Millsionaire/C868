@@ -14,6 +14,9 @@ public class SampleData {
     private static final String TITLE_5 = "Term 5";
     private static final String COURSE_1 = "Course 1";
     private static final String COURSE_2 = "Course 2";
+    private static final String COURSE_3 = "Course 3";
+    private static final String COURSE_4 = "Course 4";
+    private static final String COURSE_5 = "Course 5";
     private static final String ASSESSMENT_1 = "Assessment 1";
     private static final String ASSESSMENT_2 = "Assessment 2";
 
@@ -31,12 +34,13 @@ public class SampleData {
         assessments1.add(new AssessmentEntity(ASSESSMENT_2, getDate(1), AssessmentEntity.Type.PERFORMANCE));
         
         List<CourseEntity> courses1 = new ArrayList<>();
-        courses1.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS, 1, "Some Notes", assessments1));
-        courses1.add(new CourseEntity(COURSE_2, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE, 1));
+        courses1.add(new CourseEntity(COURSE_1, getDate(0), getDate(10), CourseEntity.Status.IN_PROGRESS, 1, "Some Notes", assessments1));
+        courses1.add(new CourseEntity(COURSE_2, getDate(20), getDate(30), CourseEntity.Status.PLAN_TO_TAKE, 1));
 
         List<CourseEntity> courses2 = new ArrayList<>();
-        courses2.add(new CourseEntity(COURSE_1, getDate(0), getDate(1), CourseEntity.Status.IN_PROGRESS, 1));
-        courses2.add(new CourseEntity(COURSE_2, getDate(2), getDate(3), CourseEntity.Status.PLAN_TO_TAKE, 1, "Some other notes", assessments1));
+        courses2.add(new CourseEntity(COURSE_3, getDate(0), getDate(10), CourseEntity.Status.IN_PROGRESS, 1));
+        courses2.add(new CourseEntity(COURSE_4, getDate(20), getDate(30), CourseEntity.Status.PLAN_TO_TAKE, 1, "Some other notes", assessments1));
+        courses2.add(new CourseEntity(COURSE_5, getDate(40), getDate(50), CourseEntity.Status.PLAN_TO_TAKE, 1, "Some other notes", assessments1));
 
         terms.add(new TermEntity(TITLE_1, getDate(0), getDate(1), courses1));
         terms.add(new TermEntity(TITLE_2, getDate(2), getDate(3), courses2));

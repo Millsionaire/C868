@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,14 +14,20 @@ import com.wgu.c196.R;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.services.TimeFormatService;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CourseReportAdapter extends RecyclerView.Adapter<CourseReportAdapter.ViewHolder> {
+public class CourseReportAdapter extends RecyclerView.Adapter<CourseReportAdapter.ViewHolder> implements Filterable {
 
-    private final List<CourseEntity> mCourses;
+    private List<CourseEntity> courseList;
+    private ArrayList<CourseEntity> courseListFull = new ArrayList<>();
 
-    public CourseReportAdapter(List<CourseEntity> mCourses) {
-        this.mCourses = mCourses;
+    public CourseReportAdapter() { }
+
+    public void setCourses(List<CourseEntity> courses) {
+        courseList = courses;
+        courseListFull.addAll(courses);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -32,7 +40,7 @@ public class CourseReportAdapter extends RecyclerView.Adapter<CourseReportAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final CourseEntity course = mCourses.get(position);
+        final CourseEntity course = courseList.get(position);
         holder.mCourseTitleText.setText(course.getTitle());
         holder.mStartDate.setText(TimeFormatService.getDateString(course.getStartDate()));
         holder.mEndDate.setText(TimeFormatService.getDateString(course.getEndDate()));
@@ -40,7 +48,10 @@ public class CourseReportAdapter extends RecyclerView.Adapter<CourseReportAdapte
 
     @Override
     public int getItemCount() {
-        return mCourses.size();
+        if (courseList == null) {
+            return 0;
+        }
+        return courseList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,5 +68,36 @@ public class CourseReportAdapter extends RecyclerView.Adapter<CourseReportAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+//    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                constraint = constraint.toString().toLowerCase();
+                courseList.clear();
+                if (constraint.length() == 0) {
+                    courseList.addAll(courseListFull);
+                } else {
+                    for (CourseEntity course : courseListFull) {
+                        if (course.getTitle().toLowerCase().contains(constraint)) {
+                            courseList.add(course);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = courseList;
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                notifyDataSetChanged();
+            }
+        };
     }
 }

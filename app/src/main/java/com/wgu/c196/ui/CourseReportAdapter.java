@@ -70,7 +70,6 @@ public class CourseReportAdapter extends RecyclerView.Adapter<CourseReportAdapte
         }
     }
 
-//    @Override
     public Filter getFilter() {
         return new Filter() {
             @Override

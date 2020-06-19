@@ -10,11 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
-;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
 import com.wgu.c196.database.entities.CourseEntity;
 import com.wgu.c196.ui.CourseReportAdapter;
 import com.wgu.c196.viewmodel.CourseReportViewModel;
@@ -27,15 +24,6 @@ public class CourseReportActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
-//    @BindView(R.id.search_text)
-//    TextView mSearchText;
-
-//    @OnTextChanged(R.id.search_text)
-//    public void onSearchTextChanged() {
-//        courseReportViewModel.filterCourses(mSearchText.getText().toString());
-//    }
-
-    private List<CourseEntity> courseData = new ArrayList<>();
     private CourseReportAdapter mAdapter;
     private CourseReportViewModel courseReportViewModel;
 
@@ -58,7 +46,6 @@ public class CourseReportActivity extends AppCompatActivity {
                 new Observer<List<CourseEntity>>() {
                     @Override
                     public void onChanged(@Nullable List<CourseEntity> courseEntities) {
-
                         mAdapter.setCourses(courseEntities);
                     }
                 };
